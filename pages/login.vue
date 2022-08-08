@@ -16,7 +16,7 @@
       </view>
       <view class="input-item flex align-center" v-if="captchaEnabled">
         <view class="iconfont icon-code icon"></view>
-        <input v-model="loginForm.code" type="number" class="input" placeholder="请输入验证码" maxlength="4" />
+        <input v-model="loginForm.code" type="text" class="input" placeholder="请输入验证码" maxlength="4" />
         <image :src="codeUrl" @click="getCode" class="login-code-img"></image>
       </view>
       <view class="action-btn">
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-  import { getCodeImg } from '@/api/login'
+  import { getCodeImg,login } from '@/api/login'
 
   export default {
     data() {
