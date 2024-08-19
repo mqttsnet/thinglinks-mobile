@@ -33,7 +33,14 @@
             />
           </wd-col>
           <wd-col :span="8">
-            <wd-img :width="100" :height="44" :src="formState.captchaSrc" />
+            <wd-img
+              v-if="formState.captchaSrc"
+              :width="100"
+              :height="44"
+              :src="formState.captchaSrc"
+              @click="buildCaptcha"
+            />
+            <wd-img v-else :width="100" :height="44" :src="noCaptcha" @click="buildCaptcha" />
           </wd-col>
         </wd-row>
       </wd-cell-group>
@@ -45,9 +52,14 @@
 </template>
 
 <script lang="ts" setup>
-// const { success: showSuccess, error: showError } = useToast()
-import { login, loadCaptcha } from '@/service/login'
+import noCaptcha from '../../static/images/login/captcha_404.png'
+import { useToast } from 'wot-design-uni'
+import { login, loadCaptcha, getUserInfoById } from '@/service/login'
 import { randomNum } from '@/utils'
+import { useUserStore } from '@/store'
+const { success: showSuccess, error: showError } = useToast()
+
+const userStore = useUserStore()
 
 const formData = reactive({
   username: '',
@@ -59,10 +71,7 @@ const formData = reactive({
 const formState = reactive({
   loading: false,
   captchaSrc: '',
-  showCaptcha: true,
 })
-
-console.log(formData)
 
 const form = ref()
 
@@ -70,17 +79,17 @@ const form = ref()
 async function buildCaptcha() {
   try {
     formData.code = ''
-
     const res = await loadCaptcha({ key: formData.key }).catch((e) => {
+      console.log(e)
       if (e.toString().indexOf('429') !== -1) {
-        // showError('获取验证码过于频繁，请1分钟后再试')
+        showError('获取验证码过于频繁，请1分钟后再试')
       } else {
-        // showError('加载验证码失败')
+        showError('加载验证码失败')
       }
       formState.captchaSrc = ''
     })
-    if (res.byteLength <= 100) {
-      // showError('系统维护中，请稍微再试~')
+    if (res?.byteLength <= 100) {
+      showError('系统维护中，请稍微再试~')
       return ''
     }
     formState.captchaSrc =
@@ -93,18 +102,41 @@ async function buildCaptcha() {
   }
 }
 
+const getUserInfoByIdHandle = async (params?: any) => {
+  const userInfo = await getUserInfoById(params)
+  userStore.setState({
+    userInfo: userInfo.data,
+  })
+  return userInfo?.data
+}
+
+const afterLogin = async () => {
+  const { sessionTimeout } = userStore.state
+  const userInfo = await getUserInfoByIdHandle()
+  uni.switchTab({
+    url: '/pages/index/index',
+  })
+  return userInfo
+}
+
 const handleSubmit = async () => {
-  form.value
-    .validate()
-    .then(({ valid, errors }) => {
-      if (valid) {
-        // showSuccess('验证成功')
-        login(formData)
-      }
+  try {
+    const { valid, errors } = await form.value.validate()
+    if (!valid) return
+    formState.loading = true
+    const res = await login({ ...formData, grantType: formData.grantType, key: formData.key })
+
+    const { token, tenantId, refreshToken, expiration } = res?.data as any
+    userStore.setState({
+      token,
+      tenantId,
+      refreshToken,
+      expireTime: expiration,
     })
-    .catch((error) => {
-      console.log(error, 'error')
-    })
+    return await afterLogin()
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 onMounted(() => {

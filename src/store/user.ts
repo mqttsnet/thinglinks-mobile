@@ -1,32 +1,54 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 
-const initState = { nickname: '', avatar: '' }
+interface UserState {
+  userInfo?: any
+  token?: string
+  roleList?: any[]
+  sessionTimeout?: boolean
+  lastUpdateTime: number
+  refreshToken?: string
+  expireTime?: string
+  tenantId?: string
+  applicationId?: string
+  applicationName?: string
+  pageCache?: any
+}
+
+const initState = {
+  // user info
+  userInfo: null,
+  // token
+  token: undefined,
+  // roleList
+  roleList: [],
+  // Whether the login expired
+  sessionTimeout: false,
+  // Last fetch time
+  lastUpdateTime: 0,
+  refreshToken: '',
+  expireTime: '',
+  // 租户ID
+  tenantId: '',
+  // 应用id
+  applicationId: '',
+  applicationName: '',
+  applicationKey: '',
+  pageCache: {},
+}
 
 export const useUserStore = defineStore(
   'user',
   () => {
-    const userInfo = ref<IUserInfo>({ ...initState })
+    const state = reactive<UserState>({ ...initState })
 
-    const setUserInfo = (val: IUserInfo) => {
-      userInfo.value = val
+    const setState = (record: any) => {
+      Object.assign(state, record)
     }
-
-    const clearUserInfo = () => {
-      userInfo.value = { ...initState }
-    }
-    // 一般没有reset需求，不需要的可以删除
-    const reset = () => {
-      userInfo.value = { ...initState }
-    }
-    const isLogined = computed(() => !!userInfo.value.token)
 
     return {
-      userInfo,
-      setUserInfo,
-      clearUserInfo,
-      isLogined,
-      reset,
+      state,
+      setState,
     }
   },
   {

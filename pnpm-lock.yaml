@@ -32,6 +32,9 @@ importers:
       dayjs:
         specifier: 1.11.10
         version: 1.11.10
+      js-base64:
+        specifier: ^3.7.7
+        version: 3.7.7
       pinia:
         specifier: 2.0.36
         version: 2.0.36(typescript@4.9.5)(vue@3.4.21(typescript@4.9.5))
@@ -3633,6 +3636,9 @@ packages:
 
   jpeg-js@0.3.7:
     resolution: {integrity: sha512-9IXdWudL61npZjvLuVe/ktHiA41iE8qFyLB+4VDTblEsWBzeg8WQTlktdUK4CdncUqtUgUg0bbOmTE2bKBKaBQ==}
+
+  js-base64@3.7.7:
+    resolution: {integrity: sha512-7rCnleh0z2CkXhH67J8K1Ytz0b2Y+yxTPL+/KOJoa20hfnVQ/3/T6W/KflYI4bRHRagNeXeU2bkNGI3v1oS/lw==}
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -10054,6 +10060,8 @@ snapshots:
   jiti@1.21.6: {}
 
   jpeg-js@0.3.7: {}
+
+  js-base64@3.7.7: {}
 
   js-tokens@4.0.0: {}
 

@@ -3,7 +3,7 @@
 {
   style: {
     navigationStyle: 'custom',
-    navigationBarTitleText: '首页',
+    navigationBarTitleText: '空间',
   },
 }
 </route>
@@ -12,10 +12,13 @@
     class="bg-white overflow-hidden pt-2 px-4"
     :style="{ marginTop: safeAreaInsets?.top + 'px' }"
   >
-    首页
+    空间
   </view>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+// 获取屏幕边界到安全区域距离
+const { safeAreaInsets } = uni.getSystemInfoSync()
+</script>
 
 <style></style>
