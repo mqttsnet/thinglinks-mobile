@@ -2,6 +2,7 @@
 import qs from 'qs'
 import { useUserStore } from '@/store'
 import { platform } from '@/utils/platform'
+import { Base64 } from 'js-base64'
 
 export type CustomRequestOptions = UniApp.RequestOptions & {
   query?: Record<string, any>
@@ -52,10 +53,17 @@ const httpInterceptor = {
     }
     // 3. 添加 token 请求头标识
     const userStore = useUserStore()
-    const { token } = userStore.userInfo as unknown as IUserInfo
+    const { token, tenantId, applicationId } = userStore.state as unknown as any
     if (token) {
-      options.header.Authorization = `Bearer ${token}`
+      options.header.Token = `${token}`
     }
+    if (tenantId) {
+      options.header.TenantId = tenantId
+    }
+    if (applicationId) {
+      options.header.ApplicationId = applicationId
+    }
+    options.header.Authorization = `${Base64.encode(`${import.meta.env.VITE_GLOB_CLIENT_ID}:${import.meta.env.VITE_GLOB_CLIENT_SECRET}`)}`
   },
 }
 

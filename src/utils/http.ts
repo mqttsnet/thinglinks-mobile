@@ -68,12 +68,14 @@ export const httpPost = <T>(
   url: string,
   data?: Record<string, any>,
   query?: Record<string, any>,
+  otherParams?: any,
 ) => {
   return http<T>({
     url,
     query,
     data,
     method: 'POST',
+    ...otherParams,
   })
 }
 
