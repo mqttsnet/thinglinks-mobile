@@ -1,151 +1,245 @@
+<route lang="json5" type="home">
+	{
+	style: {
+	navigationStyle: 'custom',
+	navigationBarTitleText: '登录',
+	},
+	}
+</route>
 <template>
-  <view class="">
-    <wd-form ref="form" :model="formData">
-      <wd-cell-group border>
-        <wd-input
-          label="用户名"
-          label-width="100px"
-          prop="username"
-          clearable
-          v-model="formData.username"
-          placeholder="请输入用户名"
-          :rules="[{ required: true, message: '请填写用户名' }]"
-        />
-        <wd-input
-          label="密码"
-          label-width="100px"
-          prop="password"
-          show-password
-          clearable
-          v-model="formData.password"
-          placeholder="请输入密码"
-          :rules="[{ required: true, message: '请填写密码' }]"
-        />
-        <wd-row>
-          <wd-col :span="16">
-            <wd-input
-              label="验证码"
-              label-width="100px"
-              prop="code"
-              v-model="formData.code"
-              placeholder="请输入验证码"
-              :rules="[{ required: true, message: '请填写验证码' }]"
-            />
-          </wd-col>
-          <wd-col :span="8">
-            <wd-img
-              v-if="formState.captchaSrc"
-              :width="100"
-              :height="44"
-              :src="formState.captchaSrc"
-              @click="buildCaptcha"
-            />
-            <wd-img v-else :width="100" :height="44" :src="noCaptcha" @click="buildCaptcha" />
-          </wd-col>
-        </wd-row>
-      </wd-cell-group>
-      <view class="footer">
-        <wd-button type="primary" size="large" @click="handleSubmit" block>提交</wd-button>
-      </view>
-    </wd-form>
-  </view>
+	<view class="wrap">
+		<image class="logo" src="/static/logo.png"></image>
+		<view class="title-wrap">
+			<text class="title">探索无限可能!</text>
+			<text class="p">让智慧生活变得更加舒适、便捷和安全</text>
+		</view>
+		<view class="middle">
+			<view class="middle-item" v-for="(item, index) in list" :key="index" @click="handleClick(index)">
+				<text class="iconfont" :class="item.url" style="font-size: 52rpx;position: absolute;left: 36rpx;"
+					:style="{ color: item.color }"></text>
+				<text>{{ item.text }}</text>
+			</view>
+		</view>
+		<view class="btn-wrap">
+			<navigator class="register" url="">注册</navigator>
+			<navigator class="login" url="/pages/toLogin/index">登录</navigator>
+		</view>
+		<view class="footer">
+			<text class="privacy">隐私政策</text>
+			<view class="dot"></view>
+			<text class="serve">服务条款</text>
+		</view>
+	</view>
 </template>
 
-<script lang="ts" setup>
-import noCaptcha from '../../static/images/login/captcha_404.png'
-import { useToast } from 'wot-design-uni'
-import { login, loadCaptcha, getUserInfoById } from '@/service/login'
-import { randomNum } from '@/utils'
-import { useUserStore } from '@/store'
-const { success: showSuccess, error: showError } = useToast()
+<script setup lang="ts">
+	import {
+		ref
+	} from 'vue';
 
-const userStore = useUserStore()
+	// 登陆方式
+	const list = ref([{
+		url: 'icon-weixin1',
+		text: '微信账号登录',
+		color: '#09bb07'
+	},
+	{
+		url: 'icon-iconfontapple',
+		text: 'Apple账号登录',
+		color: '#000000'
+	},
+	{
+		url: 'icon-zhifubaozhifu',
+		text: '支付宝账号登录',
+		color: '#02a9f1'
+	},
+	{
+		url: 'icon-shouji',
+		text: '手机号登录',
+		color: '#405ff2'
+	}
+	])
 
-const formData = reactive({
-  username: '',
-  password: '',
-  code: '',
-  grantType: 'CAPTCHA',
-  key: randomNum(24, 16),
-})
-const formState = reactive({
-  loading: false,
-  captchaSrc: '',
-})
+	const handleClick = (index : any) => {
+		switch (index) {
+			case 0:
+				loginWithWeChat();
+				break;
+			case 1:
+				loginWithApple();
+				break;
+			case 2:
+				loginWithAlipay();
+				break;
+			case 3:
+				loginWithPhone();
+				break;
+			default:
+				console.log('Unknown option');
+		}
+	};
 
-const form = ref()
+	const loginWithWeChat = () => {
+		console.log('微信账号登录');
+	};
 
-// 生成验证码
-async function buildCaptcha() {
-  try {
-    formData.code = ''
-    const res = await loadCaptcha({ key: formData.key }).catch((e) => {
-      console.log(e)
-      if (e.toString().indexOf('429') !== -1) {
-        showError('获取验证码过于频繁，请1分钟后再试')
-      } else {
-        showError('加载验证码失败')
-      }
-      formState.captchaSrc = ''
-    })
-    if (res?.byteLength <= 100) {
-      showError('系统维护中，请稍微再试~')
-      return ''
-    }
-    formState.captchaSrc =
-      'data:image/png;base64,' +
-      btoa(new Uint8Array(res).reduce((data, byte) => data + String.fromCharCode(byte), ''))
-  } catch (error) {
-    console.error(error)
-    formState.captchaSrc = ''
-    return ''
-  }
-}
+	const loginWithApple = () => {
+		console.log('Apple账号登录');
+	};
 
-const getUserInfoByIdHandle = async (params?: any) => {
-  const userInfo = await getUserInfoById(params)
-  userStore.setState({
-    userInfo: userInfo.data,
-  })
-  return userInfo?.data
-}
+	const loginWithAlipay = () => {
+		console.log('支付宝账号登录');
+	};
 
-const afterLogin = async () => {
-  const { sessionTimeout } = userStore.state
-  const userInfo = await getUserInfoByIdHandle()
-  uni.switchTab({
-    url: '/pages/index/index',
-  })
-  return userInfo
-}
-
-const handleSubmit = async () => {
-  try {
-    const { valid, errors } = await form.value.validate()
-    if (!valid) return
-    formState.loading = true
-    const res = await login({ ...formData, grantType: formData.grantType, key: formData.key })
-
-    const { token, tenantId, refreshToken, expiration } = res?.data as any
-    userStore.setState({
-      token,
-      tenantId,
-      refreshToken,
-      expireTime: expiration,
-    })
-    return await afterLogin()
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-onMounted(() => {
-  buildCaptcha()
-})
+	const loginWithPhone = () => {
+		console.log('手机号登录');
+		uni.navigateTo({
+			url: '/pages/login/toPhoneLogin/index'
+		})
+	};
 </script>
 
-<style lang="scss" scoped>
-.footer {
-  padding: 12px;
-}
+<style lang="scss">
+	.wrap {
+		padding: 0 48rpx;
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+
+		.logo {
+			width: 180rpx;
+			height: 184rpx;
+			margin-top: 60rpx;
+		}
+
+		.title-wrap {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			margin-top: 52rpx;
+
+			.title {
+				font-size: 64rpx;
+				font-family: "Urbanist", sans-serif;
+				font-weight: 700;
+				letter-spacing: 4rpx;
+				margin-bottom: 24rpx;
+			}
+
+			.p {
+				font-size: 36rpx;
+				color: #616161;
+			}
+		}
+
+		.middle {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			margin: 96rpx 0;
+
+			.middle-item {
+				width: 100%;
+				height: 116rpx;
+				margin-bottom: 30rpx;
+				border: 2rpx solid #f3f3f3;
+				border-radius: 116rpx; // 圆角的尺寸必须和heigt的值一样
+				font-size: 32rpx;
+				font-weight: 700;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				position: relative;
+
+				image {
+					position: absolute;
+					left: 36rpx;
+				}
+			}
+
+			.middle-item:first-child {
+				image {
+					width: 52rpx;
+					height: 42rpx;
+				}
+			}
+
+			.middle-item:nth-child(2) {
+				image {
+					width: 38rpx;
+					height: 48rpx;
+				}
+			}
+
+			.middle-item:nth-child(3) {
+				image {
+					width: 52rpx;
+					height: 52rpx;
+				}
+			}
+
+			.middle-item:last-child {
+				image {
+					width: 40rpx;
+					height: 52rpx;
+				}
+			}
+		}
+
+		.btn-wrap {
+			width: 100%;
+			margin-bottom: 96rpx;
+
+			.register {
+				width: 100%;
+				height: 116rpx;
+				line-height: 116rpx;
+				text-align: center;
+				border-radius: 116rpx; // 圆角的尺寸必须和heigt的值一样
+				background-color: #475ee9;
+				color: white;
+				font-size: 32rpx;
+				font-weight: 700;
+				margin-bottom: 42rpx;
+			}
+
+			.login {
+				width: 100%;
+				height: 116rpx;
+				line-height: 116rpx;
+				text-align: center;
+				border-radius: 116rpx; // 圆角的尺寸必须和heigt的值一样
+				background-color: #eff4ff;
+				color: #3474ff;
+				font-size: 32rpx;
+				font-weight: 700;
+			}
+		}
+
+		.footer {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 28rpx;
+			color: #616161;
+			margin-bottom: 72rpx;
+
+			.privacy {
+				margin-right: 46rpx;
+			}
+
+			.dot {
+				width: 6rpx;
+				height: 6rpx;
+				background-color: #616161;
+				border-radius: 50%;
+				margin-right: 72rpx;
+			}
+		}
+	}
 </style>
