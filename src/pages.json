@@ -145,6 +145,111 @@
     {
       "root": "pages-toLogin",
       "pages": []
-    }
+    },
+		{
+				  "root": "pages-mine/pages",
+				  "pages": [
+					  {
+					  	"path": "profile/index",
+					  	"type": "mine",
+					  	"style": {
+					  	  "navigationBarTitleText": "个人信息"
+					  	}
+					  },
+					  {
+					  	"path": "space/index",
+					  	"type": "mine",
+					  	"style": {
+					  	  "navigationBarTitleText": "空间管理"
+					  	}
+					  },
+				  	{
+				  		"path": "voice/index",
+						"type": "mine",
+						"style": {
+						  "navigationBarTitleText": "语音助手"
+						}
+				  	},
+					{
+						"path": "voice/join",
+						"type": "mine",
+						"style": {
+						  "navigationBarTitleText": "",
+						  "navigationBarBackgroundColor": "#ffffff"
+						}
+					},
+					{
+						"path": "voice/result",
+						"type": "mine",
+						"style": {
+						  "navigationBarTitleText": "",
+						  "navigationBarBackgroundColor": "#ffffff"
+						}
+					},
+					{
+						"path": "notification/index",
+						"type": "mine",
+						"style": {
+						  "navigationBarTitleText": "通知",
+						  "navigationBarBackgroundColor": "#ffffff"
+						}
+					},
+					{
+						"path": "account/index",
+						"type": "mine",
+						"style": {
+						  "navigationBarTitleText": "账户与安全",
+						  "navigationBarBackgroundColor": "#ffffff"
+						}
+					},
+					{
+						"path": "setting/index",
+						"type": "mine",
+						"style": {
+						  "navigationBarTitleText": "其他设置",
+						  "navigationBarBackgroundColor": "#ffffff"
+						}
+					},
+					{
+						"path": "relevance/index",
+						"type": "mine",
+						"style": {
+						  "navigationBarTitleText": "关联账户"
+						}
+					},
+					{
+						"path" : "appearance/index",
+						"style" : 
+						{
+							"navigationBarTitleText" : "应用程序外观",
+							"navigationBarBackgroundColor": "#ffffff"
+						}
+					},
+					{
+						"path" : "appearance/language",
+						"style" : 
+						{
+							"navigationBarTitleText" : "应用程序语言",
+							"navigationBarBackgroundColor": "#ffffff"
+						}
+					},
+					{
+						"path" : "data/index",
+						"style" : 
+						{
+							"navigationBarTitleText" : "数据与分析",
+							"navigationBarBackgroundColor": "#ffffff"
+						}
+					},
+					{
+						"path" : "help/index",
+						"style" : 
+						{
+							"navigationBarTitleText" : "联系我们"
+						}
+					}
+					
+				  ]
+		}
   ]
 }

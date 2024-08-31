@@ -14,7 +14,20 @@ interface NavigateToOptions {
        "/pages/toLogin/phone" |
        "/pages/toLogin/register" |
        "/pages/spaceSub/addDevice/index" |
-       "/pages/spaceSub/select/index";
+       "/pages/spaceSub/select/index" |
+       "/pages-mine/pages/account/index" |
+       "/pages-mine/pages/appearance/index" |
+       "/pages-mine/pages/appearance/language" |
+       "/pages-mine/pages/data/index" |
+       "/pages-mine/pages/help/index" |
+       "/pages-mine/pages/notification/index" |
+       "/pages-mine/pages/profile/index" |
+       "/pages-mine/pages/relevance/index" |
+       "/pages-mine/pages/setting/index" |
+       "/pages-mine/pages/space/index" |
+       "/pages-mine/pages/voice/index" |
+       "/pages-mine/pages/voice/join" |
+       "/pages-mine/pages/voice/result";
 }
 interface RedirectToOptions extends NavigateToOptions {}
 
