@@ -1,7 +1,7 @@
 {
   "globalStyle": {
     "navigationStyle": "default",
-    "navigationBarTitleText": "thing-links",
+    "navigationBarTitleText": "thinglinks",
     "navigationBarBackgroundColor": "#f8f8f8",
     "navigationBarTextStyle": "black",
     "backgroundColor": "#FFFFFF"
@@ -14,10 +14,10 @@
     }
   },
   "tabBar": {
-    "color": "#999999",
-    "selectedColor": "#018d71",
+    "color": "#212121",
+    "selectedColor": "#405ff2",
     "backgroundColor": "#F8F8F8",
-    "borderStyle": "black",
+    "borderStyle": "#212121",
     "height": "50px",
     "fontSize": "10px",
     "iconWidth": "24px",
@@ -51,11 +51,11 @@
   },
   "pages": [
     {
-      "path": "pages/space/index",
+      "path": "pages/login/index",
       "type": "home",
       "style": {
         "navigationStyle": "custom",
-        "navigationBarTitleText": "空间"
+        "navigationBarTitleText": "登录"
       }
     },
     {
@@ -67,8 +67,12 @@
       }
     },
     {
-      "path": "pages/login/index",
-      "type": "page"
+      "path": "pages/guide/index",
+      "type": "page",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "场景"
+      }
     },
     {
       "path": "pages/mine/index",
@@ -85,7 +89,62 @@
         "navigationStyle": "custom",
         "navigationBarTitleText": "场景"
       }
+    },
+    {
+      "path": "pages/space/index",
+      "type": "page",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "空间"
+      }
+    },
+    {
+      "path": "pages/toLogin/index",
+      "type": "page",
+      "layout": "demo",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "登录"
+      }
+    },
+    {
+      "path": "pages/toLogin/phone",
+      "type": "page",
+      "layout": "demo",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "登录"
+      }
+    },
+    {
+      "path": "pages/toLogin/register",
+      "type": "page",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "注册"
+      }
+    },
+    {
+      "path": "pages/spaceSub/addDevice/index",
+      "type": "page",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "添加设备"
+      }
+    },
+    {
+      "path": "pages/spaceSub/select/index",
+      "type": "page",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "我的空间"
+      }
     }
   ],
-  "subPackages": []
+  "subPackages": [
+    {
+      "root": "pages-toLogin",
+      "pages": []
+    }
+  ]
 }
