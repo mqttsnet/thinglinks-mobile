@@ -230,11 +230,10 @@ const toHelp = () => {
   .weep {
     display: flex;
     justify-content: flex-end;
-    /*#endif*/
     margin-top: 10rpx;
     /*#ifdef MP*/
     margin-right: 180rpx;
-
+    /*#endif*/
     text {
       margin-left: 32rpx;
       font-size: 36rpx;
