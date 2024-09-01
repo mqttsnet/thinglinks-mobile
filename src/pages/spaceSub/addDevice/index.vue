@@ -10,12 +10,15 @@
 	<!-- 导航栏 -->
 	<view class="">
 		<wd-navbar title="添加设备" :bordered="false" left-arrow @click-left="handleClickLeft">
-			<template #right>
+			<template #right v-if="showNavbar">
 				<wd-icon name="scan" size="18" />
+			</template>
+			<template #right v-if="!showNavbar">
+				<wd-icon name="more" size="18" />
 			</template>
 		</wd-navbar>
 	</view>
-	<view class="device_seg">
+	<view class="device_seg" v-if="showNavbar">
 		<wd-segmented :options="list" v-model:value="current" size="large" active-color="#ffffff"
 			class="custom-segmented" @change="changeSegmented"></wd-segmented>
 	</view>
@@ -40,6 +43,9 @@
 				<image class="avatar" src="../../../static/avatar.jpg" mode="aspectFill"></image>
 			</view>
 		</view>
+		<view style="color: #616161;font-size: 36rpx;text-align: center;" v-if="!showNavbar">
+			请开灯并确认灯是否快速闪烁
+		</view>
 		<view class="findDevice" v-if="!showDevice">
 			<view class="" style="margin: 50rpx 0;">
 				<wd-checkbox v-model="boxValue" @change="checkboxChange" checked-color="#405ff2">智能V1监控摄像头</wd-checkbox>
@@ -48,7 +54,7 @@
 		</view>
 		<view class="device_down" :style="{ marginTop: showDevice ? '200rpx' : '56rpx' }">
 			<wd-button v-if="showDevice" @click="toConnected">连接到所有设备</wd-button>
-			<wd-button v-if="!showDevice" @click="toConnected">连接</wd-button>
+			<wd-button v-if="!showDevice" @click="toConnection">连接</wd-button>
 			<view class="text">
 				找不到您的设备？
 			</view>
@@ -67,7 +73,7 @@
 		</view>
 		<view class="device_data">
 			<view class="data_item" v-for="(itme,index) in deviceData" :key="index">
-				<image :src="itme.src" mode=""></image>
+				<image :src="itme.src" mode="" @click="toAddManually"></image>
 				<view class="item_text">
 					{{itme.name}}
 				</view>
@@ -99,6 +105,11 @@
 	const toConnected = () => {
 		showDevice.value = false;
 	}
+	const toConnection = () => {
+		uni.navigateTo({
+			url: '/pages/spaceSub/connection/index'
+		});
+	}
 	// 手动添加
 	// 设备数据
 	const deviceList = ref(['热门设备', '灯具', '相机', '电气', '传感器']);
@@ -120,6 +131,13 @@
 			src: '../../../static/avatar.jpg'
 		}
 	])
+
+	const showNavbar = ref(true);
+	const toAddManually = () => {
+		current.value = '附近的设备';
+		showDevice.value = false;
+		showNavbar.value = false;
+	}
 </script>
 
 <style lang="scss" scoped>

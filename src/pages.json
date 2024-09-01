@@ -133,6 +133,14 @@
       }
     },
     {
+      "path": "pages/spaceSub/connection/index",
+      "type": "page",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "连接成功"
+      }
+    },
+    {
       "path": "pages/spaceSub/select/index",
       "type": "page",
       "style": {
@@ -141,10 +149,5 @@
       }
     }
   ],
-  "subPackages": [
-    {
-      "root": "pages-toLogin",
-      "pages": []
-    }
-  ]
+  "subPackages": []
 }

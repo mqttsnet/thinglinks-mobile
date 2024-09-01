@@ -118,8 +118,18 @@
 					<text class="iconfont icon-shebei" style="font-size: 36rpx;margin-right: 24rpx;"></text>添加设备
 				</view>
 				<wd-gap bg-color="#eeeeee" style="height: 1rpx;margin: 0 48rpx;"></wd-gap>
-				<view class="popup_text">
+				<view class="popup_text" @click="startScan">
 					<text class="iconfont icon-saoyisao1" style="font-size: 36rpx;margin-right: 24rpx;"></text>扫描添加
+					<!-- 输入设备码的部分 -->
+					<view v-if="showInput">
+						<input v-model="deviceCode" placeholder="请输入设备码" />
+						<button @click="submitDeviceCode">提交设备码</button>
+					</view>
+
+					<!-- 显示扫码结果或错误信息 -->
+					<view v-if="scanResult">
+						<text>扫码结果: {{ scanResult }}</text>
+					</view>
 				</view>
 			</wd-popup>
 		</view>
@@ -157,6 +167,42 @@
 		});
 		showDevice.value = false;
 	}
+
+	//扫码
+	const showInput = ref(false);  // 控制是否显示输入框
+	const deviceCode = ref('');    // 设备码的值
+	const scanResult = ref('');    // 扫码结果
+
+	// 启动扫码
+	const startScan = () => {
+		uni.scanCode({
+			success: (res) => {
+				console.log(res);
+				// 成功扫描二维码
+				scanResult.value = res.result;
+				showInput.value = false; // 隐藏输入框
+			},
+			fail: (err) => {
+				console.log(err);
+				// 扫码失败，显示输入框
+				showInput.value = true;
+			}
+		});
+	};
+
+	// 提交设备码
+	const submitDeviceCode = () => {
+		if (deviceCode.value.trim()) {
+			scanResult.value = deviceCode.value;
+			deviceCode.value = ''; // 清空输入框
+			showInput.value = false; // 隐藏输入框
+		} else {
+			uni.showToast({
+				title: '设备码不能为空',
+				icon: 'none'
+			});
+		}
+	};
 </script>
 
 <style lang="scss" scoped>
