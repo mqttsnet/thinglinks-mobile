@@ -3,28 +3,32 @@
 	style: {
 	navigationStyle: 'custom',
 	navigationBarTitleText: '我的空间',
+	navigationBarBackgroundColor: '#6C6F77'
 	},
 	}
 </route>
 <template>
-	<view class="select_container" @click="handleContainerClick">
-		<view class="select_wrap" @click.stop>
-			<view class="select_list" v-for="(item,index) in spaceList" :key="index">
-				<view class="" style="display: flex;align-items: center;justify-content: center;">
-					<wd-icon v-if="selectedIndex === index" name="check" size="22px" color="#405ff2"
-						style="margin-right: 20rpx;"></wd-icon>
-					<view class="text">
-						{{ item }}
+	<view class="bg-white overflow-hidden pt-2 px-4" :style="{ marginTop: safeAreaInsets?.top + 'px' }"
+		style="background: #6C6F77;">
+		<view class="select_container" @click="handleContainerClick">
+			<view class="select_wrap" @click.stop>
+				<view class="select_list" v-for="(item,index) in spaceList" :key="index">
+					<view class="" style="display: flex;align-items: center;justify-content: center;">
+						<wd-icon v-if="selectedIndex === index" name="check" size="22px" color="#405ff2"
+							style="margin-right: 20rpx;"></wd-icon>
+						<view class="text">
+							{{ item }}
+						</view>
+					</view>
+					<view class="" style="padding: 0 30rpx;">
+						<wd-gap bg-color="#04060f14" height="1rpx"></wd-gap>
 					</view>
 				</view>
-				<view class="" style="padding: 0 30rpx;">
-					<wd-gap bg-color="#04060f14" height="1rpx"></wd-gap>
-				</view>
-			</view>
-			<view class="management">
-				<wd-icon name="setting1" size="24px" style="margin-right: 20rpx;"></wd-icon>
-				<view class="text">
-					空间管理
+				<view class="management">
+					<wd-icon name="setting1" size="24px" style="margin-right: 20rpx;"></wd-icon>
+					<view class="text">
+						空间管理
+					</view>
 				</view>
 			</view>
 		</view>
@@ -33,13 +37,13 @@
 
 <script lang="ts" setup>
 	import { ref, onMounted } from 'vue';
-
+	const { safeAreaInsets } = uni.getSystemInfoSync();
 	const selectedParam = 1; // 传入的参数
 	const spaceList = ref(['我的家', '公寓', '办公室', '父母的房子', '花园']);
 	const selectedIndex = ref(null);
 
 
-	const handleContainerClick = (event) => {
+	const handleContainerClick = () => {
 		uni.switchTab({
 			url: '/pages/space/index'
 		});

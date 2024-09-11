@@ -14,6 +14,8 @@ interface NavigateToOptions {
        "/pages/toLogin/phone" |
        "/pages/toLogin/register" |
        "/pages/spaceSub/addDevice/index" |
+       "/pages/spaceSub/connection/index" |
+       "/pages/spaceSub/equipment/index" |
        "/pages/spaceSub/select/index";
 }
 interface RedirectToOptions extends NavigateToOptions {}

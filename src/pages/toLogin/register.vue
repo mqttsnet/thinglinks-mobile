@@ -1,55 +1,59 @@
 <route lang="json5">
 	{
+	layout: 'demo',
 	style: {
 	navigationStyle: 'custom',
-	navigationBarTitleText: '注册',
+	navigationBarTitleText: '登录',
 	},
 	}
 </route>
 <template>
-	<view class="wrap">
-		<navigator open-type="navigateBack"></navigator>
-		<view class="title-wrap">
-			<text class="title">欢迎回来!</text>
-			<text class="p">登录后享受智能生活。</text>
-		</view>
-		<view class="content">
-			<view class="mailbox">
-				<view class="input-title">手机号</view>
-				<view class="input-wrap">
-					<image class="icon"
-						src="https://files.axshare.com/gsc/QYC4FI/3c/aa/87/3caa87d5a7d543dba1a368caf8097dcd/images/17-%E7%99%BB%E5%BD%95_%E7%8A%B6%E6%80%81/exclude_u10.svg?pageId=502db071-ab16-4861-84a1-a3a49acdbb8f"
-						mode=""></image>
-					<input :value="formData.username" focus placeholder="请输入手机号" />
+	<view class="bg-white overflow-hidden pt-2 px-4" :style="{ marginTop: safeAreaInsets?.top + 'px' }">
+		<view class="wrap">
+			<navigator open-type="navigateBack"></navigator>
+			<view class="title-wrap">
+				<text class="title">欢迎回来!</text>
+				<text class="p">登录后享受智能生活。</text>
+			</view>
+			<view class="content">
+				<view class="mailbox">
+					<view class="input-title">手机号</view>
+					<view class="input-wrap">
+						<text class="iconfont icon-youxiang" style="margin-right: 26rpx;font-size: 40rpx;"></text>
+						<input :value="formData.username" focus placeholder="请输入手机号" />
+					</view>
 				</view>
-			</view>
-			<view class="password">
-				<view class="input-title">密码</view>
-				<view class="input-wrap">
-					<image class="icon"
-						src="https://files.axshare.com/gsc/QYC4FI/3c/aa/87/3caa87d5a7d543dba1a368caf8097dcd/images/17-%E7%99%BB%E5%BD%95_%E7%8A%B6%E6%80%81/exclude_u10.svg?pageId=502db071-ab16-4861-84a1-a3a49acdbb8f"
-						mode=""></image>
-					<input :value="formData.code" focus maxlength="6" placeholder="请输入密码" />
+				<view class="password">
+					<view class="input-title">密码</view>
+					<view class="input-wrap">
+						<text class="iconfont icon-jiesuo" style="margin-right: 26rpx;font-size: 40rpx;"></text>
+						<input class="uni-input" v-model="formData.password" placeholder="请输入密码"
+							:type="showPassword ? 'text' : 'password'" />
+						<text class="iconfont" :class="showPassword ? 'icon-yanjing' : 'icon-yanjing_yincang'"
+							@click="changePassword"></text>
+					</view>
 				</view>
-			</view>
-			<view class="remember-wrap">
-				<checkbox-group class="checkbox-wrap">
-					<label>
-						<checkbox class="checkbox" value="checkboxValue" />记住账号
-					</label>
-				</checkbox-group>
-				<navigator class="forget" url="">忘记密码？</navigator>
-			</view>
-			<view class="division">
-				<text>或</text>
-			</view>
-			<view class="btn-wrap">
-				<view class="btn-item" v-for="item in list">
-					<image :src="item.url" alt="" />
-					<text>{{item.text}}</text>
+				<view class="remember-wrap">
+					<checkbox-group class="checkbox-wrap">
+						<label>
+							<checkbox class="checkbox" value="checkboxValue" />记住账号
+						</label>
+					</checkbox-group>
+					<navigator class="forget" url="">忘记密码？</navigator>
 				</view>
+				<view class="division">
+					<text>或</text>
+				</view>
+				<view class="btn-wrap">
+					<view class="btn-item" v-for="item in list">
+						<text class="iconfont" :class="item.url"
+							style="font-size: 52rpx;position: absolute;left: 36rpx;"
+							:style="{ color: item.color }"></text>
+						<text>{{item.text}}</text>
+					</view>
+				</view>
+				<view class="login" @click="handleSubmit">登录</view>
 			</view>
-			<view class="login" @click="handleSubmit">登录</view>
 		</view>
 	</view>
 </template>
@@ -62,6 +66,9 @@
 	import { login, loadCaptcha, getUserInfoById } from '@/service/login'
 	import { randomNum } from '@/utils'
 	import { useUserStore } from '@/store'
+	// 获取屏幕边界到安全区域距离
+	const { safeAreaInsets } = uni.getSystemInfoSync()
+
 	const { success: showSuccess, error: showError } = useToast()
 
 	const userStore = useUserStore()
@@ -78,6 +85,30 @@
 	})
 
 	const form = ref()
+	const showPassword = ref(false);
+
+	const list = ref([{
+		url: 'icon-weixin1',
+		text: '微信账号登录',
+		color: '#09bb07'
+	},
+	{
+		url: 'icon-iconfontapple',
+		text: 'Apple账号登录',
+		color: '#000000'
+	},
+	{
+		url: 'icon-zhifubaozhifu',
+		text: '支付宝账号登录',
+		color: '#02a9f1'
+	}
+	])
+
+	const checkboxValue = ref('');
+
+	const changePassword = () => {
+		showPassword.value = !showPassword.value;
+	};
 
 	// 生成验证码
 	async function buildCaptcha() {
@@ -146,22 +177,6 @@
 	onMounted(() => {
 		buildCaptcha()
 	})
-
-	const list = ref([{
-		url: 'https://files.axshare.com/gsc/QYC4FI/3c/aa/87/3caa87d5a7d543dba1a368caf8097dcd/images/16-%E7%99%BB%E5%BD%95/%E5%BD%A2%E7%8A%B6_u38.svg?pageId=832860fb-a8da-465c-9f69-43d7a5288514',
-		text: '微信账号登录'
-	},
-	{
-		url: 'https://files.axshare.com/gsc/QYC4FI/3c/aa/87/3caa87d5a7d543dba1a368caf8097dcd/images/16-%E7%99%BB%E5%BD%95/vect__u41.svg?pageId=832860fb-a8da-465c-9f69-43d7a5288514',
-		text: 'Apple账号登录'
-	},
-	{
-		url: 'https://files.axshare.com/gsc/QYC4FI/3c/aa/87/3caa87d5a7d543dba1a368caf8097dcd/images/16-%E7%99%BB%E5%BD%95/%E5%BD%A2%E7%8A%B6_u48.svg?pageId=832860fb-a8da-465c-9f69-43d7a5288514',
-		text: '支付宝账号登录'
-	}
-	])
-
-	const checkboxValue = ref('');
 </script>
 
 <style lang="scss">
@@ -224,8 +239,18 @@
 				}
 
 				input {
-					width: 280rpx;
+					width: 380rpx;
 					height: 58rpx;
+				}
+
+				.icon-yanjing {
+					font-size: 45rpx;
+					margin-left: 200rpx;
+				}
+
+				.icon-yanjing_yincang {
+					font-size: 45rpx;
+					margin-left: 200rpx;
 				}
 			}
 

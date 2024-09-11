@@ -8,6 +8,7 @@
 	}
 </route>
 <template>
+
 	<view class="bg-white overflow-hidden pt-2 px-4" :style="{ marginTop: safeAreaInsets?.top + 'px' }">
 		<view class="space_top">
 			<view class="space_top_item" @click="toSelect">
@@ -18,9 +19,9 @@
 					<wd-icon name="arrow-down" size="45rpx" color="#212121"></wd-icon>
 				</view>
 			</view>
-			<view class="space_top_item">
-				<view class="" style="margin-right: 64rpx;">
-					<text class="iconfont icon-zhinengjiqiren" style="font-size: 100rpx;color: #405ff2;"></text>
+			<view class="space_top_items">
+				<view class="" style="margin-right: 45rpx;">
+					<text class="iconfont icon-zhinengjiqiren" style="font-size: 80rpx;color: #405ff2;"></text>
 				</view>
 				<view class="">
 					<text class="iconfont icon-tongzhi" style="font-size: 50rpx;"></text>
@@ -80,13 +81,21 @@
 				<wd-icon name="more1" size="45rpx" color="#212121"></wd-icon>
 			</view>
 		</view>
-		<view class="device_list">
+		<!-- <view class="device_list">
 			<view class="device_item" v-for="(item, index) in deviceList" :key="index"
 				:style="{ backgroundColor: selectedIndex === index ? '#405ff2' : '#FFFFFF', color: selectedIndex === index ? '#FFFFFF' : '#000000' }"
 				@click="selectItem(index)">
 				{{ item }}
 			</view>
-		</view>
+		</view> -->
+		<scroll-view class="device_list" scroll-x="true" :style="{ overflow: 'hidden' }">
+			<view class="device_item" v-for="(item, index) in deviceList" :key="index" :style="{
+		                backgroundColor: selectedIndex === index ? '#405ff2' : '#FFFFFF',
+		                color: selectedIndex === index ? '#FFFFFF' : '#000000'
+		            }" @click="selectItem(index)">
+				{{ item }}
+			</view>
+		</scroll-view>
 		<view class="space_list" v-if="showList">
 
 		</view>
@@ -104,12 +113,14 @@
 				<wd-button icon="add">添加设备</wd-button>
 			</view>
 		</view>
-		<view class="space_voice">
-			<text class="iconfont icon-24gl-mic" style="font-size: 56rpx;color: #405ff2;"></text>
-		</view>
-		<view class="space_add">
-			<text class="iconfont icon-tianjia-yin" style="font-size: 112rpx;color: #405ff2;"
-				@click="showDevice = true;"></text>
+		<view class="space_down">
+			<view class="space_voice">
+				<text class="iconfont icon-24gl-mic" style="font-size: 56rpx;color: #405ff2;"></text>
+			</view>
+			<view class="space_add" style="margin-left: 40rpx;">
+				<text class="iconfont icon-tianjia-yin" style="font-size: 112rpx;color: #405ff2;"
+					@click="showDevice = true;"></text>
+			</view>
 		</view>
 
 		<view class="space_popup">
@@ -117,9 +128,19 @@
 				<view class="popup_text" @click="toAddDevice">
 					<text class="iconfont icon-shebei" style="font-size: 36rpx;margin-right: 24rpx;"></text>添加设备
 				</view>
-				<wd-gap bg-color="#eeeeee" style="height: 1rpx;margin: 0 48rpx;"></wd-gap>
-				<view class="popup_text">
+				<wd-gap bg-color="#eeeeee" height="1"></wd-gap>
+				<view class="popup_text" @click="startScan">
 					<text class="iconfont icon-saoyisao1" style="font-size: 36rpx;margin-right: 24rpx;"></text>扫描添加
+					<!-- 输入设备码的部分 -->
+					<view v-if="showInput">
+						<input v-model="deviceCode" placeholder="请输入设备码" />
+						<button @click="submitDeviceCode">提交设备码</button>
+					</view>
+
+					<!-- 显示扫码结果或错误信息 -->
+					<view v-if="scanResult">
+						<text>扫码结果: {{ scanResult }}</text>
+					</view>
 				</view>
 			</wd-popup>
 		</view>
@@ -127,68 +148,93 @@
 </template>
 
 <script lang="ts" setup>
-	// 获取屏幕边界到安全区域距离
-	const { safeAreaInsets } = uni.getSystemInfoSync();
 	import { ref } from 'vue';
+	// 获取屏幕边界到安全区域距离
+	const { safeAreaInsets } = uni.getSystemInfoSync()
 
-	// 跳转至选择页
+	const deviceList = ref(['所有空间', '客厅', '卧室', '厨房', '浴室']);
+	const selectedIndex = ref(0);
+	const showList = ref(false);
+	const showDevice = ref(false);
+	const showInput = ref(false);  // 控制是否显示输入框
+	const deviceCode = ref('');    // 设备码的值
+	const scanResult = ref('');    // 扫码结果
+
+
 	const toSelect = () => {
 		uni.navigateTo({
 			url: '/pages/spaceSub/select/index'
 		});
 	}
-
-	// 设备数据
-	const deviceList = ref(['所有空间', '客厅', '卧室', '厨房', '浴室']);
-	const selectedIndex = ref(0);
 	const selectItem = (index : any) => {
 		console.log(index);
 		selectedIndex.value = index;
 		// 在此处添加点击后跳转到页面或显示内容
 		console.log('Selected value:', deviceList.value[index]);
 	};
-	// 设备列表
-	const showList = ref(false);
-	const showDevice = ref(false);
-
 	const toAddDevice = () => {
 		uni.navigateTo({
 			url: '/pages/spaceSub/addDevice/index'
 		});
 		showDevice.value = false;
 	}
+
+	const startScan = () => {
+		uni.scanCode({
+			success: (res) => {
+				console.log(res);
+				// 成功扫描二维码
+				scanResult.value = res.result;
+				showInput.value = false; // 隐藏输入框
+			},
+			fail: (err) => {
+				console.log(err);
+				// 扫码失败，显示输入框
+				showInput.value = true;
+			}
+		});
+	};
+
+	const submitDeviceCode = () => {
+		if (deviceCode.value.trim()) {
+			scanResult.value = deviceCode.value;
+			deviceCode.value = ''; // 清空输入框
+			showInput.value = false; // 隐藏输入框
+		} else {
+			uni.showToast({
+				title: '设备码不能为空',
+				icon: 'none'
+			});
+		}
+	};
 </script>
 
 <style lang="scss" scoped>
 	.space_top {
 		display: flex;
-		justify-content: space-between;
 		align-items: center;
 
 		.space_top_item {
 			display: flex;
 			align-items: center;
-
-			// :deep(.wd-drop-menu__item-title) {
-			// 	font-size: 48rpx;
-			// 	color: #212121;
-			// 	font-weight: 650;
-			// 	padding: 0 !important;
-			// 	width: 300rpx !important;
-			// }
-
-			// :deep(.wd-drop-menu__item-title-text) {
-			// 	margin-right: 60rpx;
-			// }
-
-			// :deep(.wd-drop-menu__item.is-active .wd-drop-menu__item-title[data-v-1cf247db]::after) {
-			// 	width: 0 !important;
-			// }
-
-			// :deep(.wd-drop-menu__item-title[data-v-1cf247db]::after) {
-			// 	width: 0 !important;
-			// }
 		}
+
+		// #ifndef MP-WEIXIN
+		.space_top_items {
+			display: flex;
+			align-items: center;
+			margin-left: 260rpx;
+		}
+
+		// #endif
+		// #ifdef MP-WEIXIN
+		.space_top_items {
+			display: flex;
+			align-items: center;
+			margin-left: 130rpx;
+		}
+
+		// #endif
 	}
 
 	.space_day {
@@ -226,19 +272,22 @@
 	}
 
 	.device_list {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		overflow-x: auto;
+		// display: flex;
+		// justify-content: space-between;
+		// align-items: center;
+		// overflow-x: scroll;
+		// /* 确保可左右滚动 */
+		// white-space: nowrap;
+		// -ms-overflow-style: none;
+		// scrollbar-width: none;
+		// margin: 32rpx 0;
 		white-space: nowrap;
-		-ms-overflow-style: none;
-		scrollbar-width: none;
-		margin: 32rpx 0;
+		margin-top: 30rpx;
 
-		.device_list::-webkit-scrollbar {
-			display: none;
-			/* Chrome 和 Safari */
-		}
+		/* Chrome, Safari, and WebKit-based browsers */
+		// .device_list::-webkit-scrollbar {
+		// 	display: none;
+		// }
 
 		.device_item {
 			display: inline-block;
@@ -291,23 +340,40 @@
 		}
 	}
 
-	.space_voice {
+	// #ifndef MP-WEIXIN
+	.space_down {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
 		position: fixed;
-		right: 25%;
-		bottom: 9%;
+		right: 48rpx;
+		bottom: 110rpx;
 	}
 
-	.space_add {
+	// #endif
+	// #ifdef MP-WEIXIN
+	.space_down {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
 		position: fixed;
-		right: 5%;
-		bottom: 8%;
+		right: 40rpx;
+		bottom: 10rpx;
 	}
+
+	// #endif
+
+
 
 	.space_popup {
 		:deep(.wd-popup) {
 			width: 450rpx !important;
 			padding: 0 !important;
 			border-radius: 30rpx !important;
+		}
+
+		:deep(.wd-gap) {
+			margin: 0 48rpx !important;
 		}
 
 		.popup_text {

@@ -17,7 +17,7 @@
     "color": "#212121",
     "selectedColor": "#405ff2",
     "backgroundColor": "#F8F8F8",
-    "borderStyle": "#212121",
+    "borderStyle": "black",
     "height": "50px",
     "fontSize": "10px",
     "iconWidth": "24px",
@@ -119,9 +119,10 @@
     {
       "path": "pages/toLogin/register",
       "type": "page",
+      "layout": "demo",
       "style": {
         "navigationStyle": "custom",
-        "navigationBarTitleText": "注册"
+        "navigationBarTitleText": "登录"
       }
     },
     {
@@ -133,123 +134,30 @@
       }
     },
     {
+      "path": "pages/spaceSub/connection/index",
+      "type": "page",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "连接成功"
+      }
+    },
+    {
+      "path": "pages/spaceSub/equipment/index",
+      "type": "page",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "控制设备"
+      }
+    },
+    {
       "path": "pages/spaceSub/select/index",
       "type": "page",
       "style": {
         "navigationStyle": "custom",
-        "navigationBarTitleText": "我的空间"
+        "navigationBarTitleText": "我的空间",
+        "navigationBarBackgroundColor": "#6C6F77"
       }
     }
   ],
-  "subPackages": [
-    {
-      "root": "pages-toLogin",
-      "pages": []
-    },
-		{
-				  "root": "pages-mine/pages",
-				  "pages": [
-					  {
-					  	"path": "profile/index",
-					  	"type": "mine",
-					  	"style": {
-					  	  "navigationBarTitleText": "个人信息"
-					  	}
-					  },
-					  {
-					  	"path": "space/index",
-					  	"type": "mine",
-					  	"style": {
-					  	  "navigationBarTitleText": "空间管理"
-					  	}
-					  },
-				  	{
-				  		"path": "voice/index",
-						"type": "mine",
-						"style": {
-						  "navigationBarTitleText": "语音助手"
-						}
-				  	},
-					{
-						"path": "voice/join",
-						"type": "mine",
-						"style": {
-						  "navigationBarTitleText": "",
-						  "navigationBarBackgroundColor": "#ffffff"
-						}
-					},
-					{
-						"path": "voice/result",
-						"type": "mine",
-						"style": {
-						  "navigationBarTitleText": "",
-						  "navigationBarBackgroundColor": "#ffffff"
-						}
-					},
-					{
-						"path": "notification/index",
-						"type": "mine",
-						"style": {
-						  "navigationBarTitleText": "通知",
-						  "navigationBarBackgroundColor": "#ffffff"
-						}
-					},
-					{
-						"path": "account/index",
-						"type": "mine",
-						"style": {
-						  "navigationBarTitleText": "账户与安全",
-						  "navigationBarBackgroundColor": "#ffffff"
-						}
-					},
-					{
-						"path": "setting/index",
-						"type": "mine",
-						"style": {
-						  "navigationBarTitleText": "其他设置",
-						  "navigationBarBackgroundColor": "#ffffff"
-						}
-					},
-					{
-						"path": "relevance/index",
-						"type": "mine",
-						"style": {
-						  "navigationBarTitleText": "关联账户"
-						}
-					},
-					{
-						"path" : "appearance/index",
-						"style" : 
-						{
-							"navigationBarTitleText" : "应用程序外观",
-							"navigationBarBackgroundColor": "#ffffff"
-						}
-					},
-					{
-						"path" : "appearance/language",
-						"style" : 
-						{
-							"navigationBarTitleText" : "应用程序语言",
-							"navigationBarBackgroundColor": "#ffffff"
-						}
-					},
-					{
-						"path" : "data/index",
-						"style" : 
-						{
-							"navigationBarTitleText" : "数据与分析",
-							"navigationBarBackgroundColor": "#ffffff"
-						}
-					},
-					{
-						"path" : "help/index",
-						"style" : 
-						{
-							"navigationBarTitleText" : "联系我们"
-						}
-					}
-					
-				  ]
-		}
-  ]
+  "subPackages": []
 }
