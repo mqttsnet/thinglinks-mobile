@@ -7,9 +7,11 @@
 	}
 </route>
 <template>
+	<!-- <view class="bg-white overflow-hidden pt-2 px-4" :style="{ marginTop: safeAreaInsets?.top + 'px' }"> -->
 	<!-- 导航栏 -->
 	<view class="">
-		<wd-navbar title="添加设备" :bordered="false" left-arrow @click-left="handleClickLeft">
+		<wd-navbar title="添加设备" :bordered="false" left-arrow @click-left="handleClickLeft" :placeholder="true"
+			:safeAreaInsetTop="true">
 			<template #right v-if="showNavbar">
 				<wd-icon name="scan" size="18" />
 			</template>
@@ -18,90 +20,98 @@
 			</template>
 		</wd-navbar>
 	</view>
-	<view class="device_seg" v-if="showNavbar">
-		<wd-segmented :options="list" v-model:value="current" size="large" active-color="#ffffff"
-			class="custom-segmented" @change="changeSegmented"></wd-segmented>
-	</view>
-	<view class="" v-if="current == '附近的设备'">
-		<view class="device_title" v-if="showDevice">
-			正在寻找附近的设备...
+	<view class="device_wrap">
+		<view class="device_seg" v-if="showNavbar">
+			<wd-segmented :options="list" v-model:value="current" size="large" active-color="#ffffff"
+				class="custom-segmented" @change="changeSegmented"></wd-segmented>
 		</view>
-		<view class="device_title" v-if="!showDevice">
-			连接到设备
-		</view>
-		<view class="device_text">
-			<text class="iconfont icon-wifi1" style="font-size: 36rpx;margin-right: 24rpx;color: #405ff2;"></text>
-			<text class="iconfont icon-lanya-F" style="font-size: 36rpx;margin-right: 24rpx;color: #405ff2;"></text>
-			打开 Wifi 和蓝牙进行连接
-		</view>
-		<view class="radar-container" v-if="showDevice">
-			<!-- 扩散的圆圈 -->
-			<view class="radar-circle" v-for="n in 4" :key="n"></view>
+		<view class="" v-if="current == '附近的设备'">
+			<view class="device_title" v-if="showDevice">
+				正在寻找附近的设备...
+			</view>
+			<view class="device_title" v-if="!showDevice">
+				连接到设备
+			</view>
+			<view class="device_text">
+				<text class="iconfont icon-wifi1" style="font-size: 36rpx;margin-right: 24rpx;color: #405ff2;"></text>
+				<text class="iconfont icon-lanya-F" style="font-size: 36rpx;margin-right: 24rpx;color: #405ff2;"></text>
+				打开 Wifi 和蓝牙进行连接
+			</view>
+			<view class="radar-container" v-if="showDevice">
+				<!-- 扩散的圆圈 -->
+				<view class="radar-circle" v-for="n in 4" :key="n"></view>
 
-			<!-- 中心头像 -->
-			<view class="center-avatar">
-				<image class="avatar" src="../../../static/avatar.jpg" mode="aspectFill"></image>
+				<!-- 中心头像 -->
+				<view class="center-avatar">
+					<image class="avatar" src="../../../static/avatar.jpg" mode="aspectFill"></image>
+				</view>
+			</view>
+			<view style="color: #616161;font-size: 36rpx;text-align: center;" v-if="!showNavbar">
+				请开灯并确认灯是否快速闪烁
+			</view>
+			<view class="findDevice" v-if="!showDevice">
+				<view class="" style="margin: 50rpx 0;">
+					<wd-checkbox v-model="boxValue" @change="checkboxChange"
+						checked-color="#405ff2">智能V1监控摄像头</wd-checkbox>
+				</view>
+				<image src="../../../static/avatar.jpg" mode="aspectFill"></image>
+			</view>
+			<view class="device_down" :style="{ marginTop: showDevice ? '200rpx' : '56rpx' }">
+				<wd-button v-if="showDevice" @click="toConnected">连接到所有设备</wd-button>
+				<wd-button v-if="!showDevice" @click="toConnection">连接</wd-button>
+				<view class="text">
+					找不到您的设备？
+				</view>
+				<view class="message">
+					了解更多
+				</view>
 			</view>
 		</view>
-		<view style="color: #616161;font-size: 36rpx;text-align: center;" v-if="!showNavbar">
-			请开灯并确认灯是否快速闪烁
-		</view>
-		<view class="findDevice" v-if="!showDevice">
-			<view class="" style="margin: 50rpx 0;">
-				<wd-checkbox v-model="boxValue" @change="checkboxChange" checked-color="#405ff2">智能V1监控摄像头</wd-checkbox>
-			</view>
-			<image src="../../../static/avatar.jpg" mode="aspectFill"></image>
-		</view>
-		<view class="device_down" :style="{ marginTop: showDevice ? '200rpx' : '56rpx' }">
-			<wd-button v-if="showDevice" @click="toConnected">连接到所有设备</wd-button>
-			<wd-button v-if="!showDevice" @click="toConnection">连接</wd-button>
-			<view class="text">
-				找不到您的设备？
-			</view>
-			<view class="message">
-				了解更多
-			</view>
-		</view>
-	</view>
-	<view class="" v-if="current == '手动添加'">
-		<view class="device_list">
-			<view class="device_item" v-for="(item, index) in deviceList" :key="index"
-				:style="{ backgroundColor: selectedIndex === index ? '#405ff2' : '#FFFFFF', color: selectedIndex === index ? '#FFFFFF' : '#000000' }"
-				@click="selectItem(index)">
-				{{ item }}
-			</view>
-		</view>
-		<view class="device_data">
-			<view class="data_item" v-for="(itme,index) in deviceData" :key="index">
-				<image :src="itme.src" mode="" @click="toAddManually"></image>
-				<view class="item_text">
-					{{itme.name}}
+		<view class="" v-if="current == '手动添加'">
+			<scroll-view class="device_list" scroll-x="true" :style="{ overflow: 'hidden' }">
+				<view class="device_item" v-for="(item, index) in deviceList" :key="index" :style="{
+				                backgroundColor: selectedIndex === index ? '#405ff2' : '#FFFFFF',
+				                color: selectedIndex === index ? '#FFFFFF' : '#000000'
+				            }" @click="selectItem(index)">
+					{{ item }}
+				</view>
+			</scroll-view>
+			<view class="device_data">
+				<view class="data_item" v-for="(itme,index) in deviceData" :key="index">
+					<image :src="itme.src" mode="" @click="toAddManually"></image>
+					<view class="item_text">
+						{{itme.name}}
+					</view>
 				</view>
 			</view>
 		</view>
 	</view>
+	<!-- </view> -->
 </template>
 
 <script lang="ts" setup>
 	import { ref } from 'vue';
+	// 获取屏幕边界到安全区域距离
+	const { safeAreaInsets } = uni.getSystemInfoSync()
+
+	const list = ref<string[]>(['附近的设备', '手动添加'])
+	const showDevice = ref(true);
+	const current = ref('附近的设备');
+	const boxValue = ref<boolean>(true);
+	const deviceList = ref(['热门设备', '灯具', '相机', '电气', '传感器']);
+	const selectedIndex = ref(0);
+	const showNavbar = ref(true);
+
 	function handleClickLeft() {
 		uni.navigateBack()
 	}
-	const list = ref<string[]>(['附近的设备', '手动添加'])
-	// 附近的设备
-	const showDevice = ref(true);
-	const current = ref('附近的设备');
 	const changeSegmented = (event : any) => {
 		console.log('分段器的切换', event);
 		current.value = event.value;
 	};
-	// const avatarUrl = ref('../../static/avatar.jpg');
-	const boxValue = ref<boolean>(true)
-
 	function checkboxChange({ value }) {
 		console.log(value);
 	}
-
 	const toConnected = () => {
 		showDevice.value = false;
 	}
@@ -110,17 +120,12 @@
 			url: '/pages/spaceSub/connection/index'
 		});
 	}
-	// 手动添加
-	// 设备数据
-	const deviceList = ref(['热门设备', '灯具', '相机', '电气', '传感器']);
-	const selectedIndex = ref(0);
 	const selectItem = (index : any) => {
 		console.log(index);
 		selectedIndex.value = index;
 		// 在此处添加点击后跳转到页面或显示内容
 		console.log('Selected item:', deviceList.value[index]);
 	};
-
 	const deviceData = ref([
 		{
 			name: '智能V1摄像头',
@@ -131,8 +136,6 @@
 			src: '../../../static/avatar.jpg'
 		}
 	])
-
-	const showNavbar = ref(true);
 	const toAddManually = () => {
 		current.value = '附近的设备';
 		showDevice.value = false;
@@ -141,12 +144,20 @@
 </script>
 
 <style lang="scss" scoped>
-	.device_seg {
-		:deep(.wd-segmented) {
-			margin: 24rpx auto;
-			width: 93% !important;
-		}
+	// #ifdef MP-WEIXIN
+	:deep(.wd-navbar__right) {
+		margin-right: 180rpx !important;
+	}
 
+	// #endif
+
+
+	.device_wrap {
+		width: 93%;
+		margin: 0 auto;
+	}
+
+	.device_seg {
 		:deep(.wd-segmented__item--active) {
 			background: #405ff2;
 		}
@@ -154,7 +165,6 @@
 		:deep(.wd-segmented__item.is-active) {
 			color: #fff !important;
 		}
-
 	}
 
 	// 附近的设备
@@ -287,19 +297,22 @@
 
 	// 手动添加
 	.device_list {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		overflow-x: auto;
+		// display: flex;
+		// justify-content: space-between;
+		// align-items: center;
+		// overflow-x: scroll;
+		// /* 确保可左右滚动 */
+		// white-space: nowrap;
+		// -ms-overflow-style: none;
+		// scrollbar-width: none;
+		// margin: 32rpx 0;
 		white-space: nowrap;
-		-ms-overflow-style: none;
-		scrollbar-width: none;
-		margin: 32rpx 30rpx;
+		margin-top: 30rpx;
 
-		.device_list::-webkit-scrollbar {
-			display: none;
-			/* Chrome 和 Safari */
-		}
+		/* Chrome, Safari, and WebKit-based browsers */
+		// .device_list::-webkit-scrollbar {
+		// 	display: none;
+		// }
 
 		.device_item {
 			display: inline-block;
@@ -316,7 +329,7 @@
 	.device_data {
 		display: flex;
 		justify-content: space-between;
-		margin: 32rpx 48rpx;
+		margin: 32rpx 0;
 		flex-wrap: wrap;
 
 		.data_item {

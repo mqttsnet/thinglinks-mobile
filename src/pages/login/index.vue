@@ -7,32 +7,37 @@
 	}
 </route>
 <template>
-	<view class="wrap">
-		<image class="logo" src="/static/logo.png"></image>
-		<view class="title-wrap">
-			<text class="title">探索无限可能!</text>
-			<text class="p">让智慧生活变得更加舒适、便捷和安全</text>
-		</view>
-		<view class="middle">
-			<view class="middle-item" v-for="(item, index) in list" :key="index" @click="handleClick(index)">
-				<text class="iconfont" :class="item.url" style="font-size: 52rpx;position: absolute;left: 36rpx;"
-					:style="{ color: item.color }"></text>
-				<text>{{ item.text }}</text>
+	<view class="bg-white overflow-hidden pt-2 px-4" :style="{ marginTop: safeAreaInsets?.top + 'px' }">
+		<view class="wrap">
+			<image class="logo" src="@/static/images/logo.png"></image>
+			<view class="title-wrap">
+				<text class="title">探索无限可能!</text>
+				<text class="p">让智慧生活变得更加舒适、便捷和安全</text>
+			</view>
+			<view class="middle">
+				<view class="middle-item" v-for="(item, index) in list" :key="index" @click="handleClick(index)">
+					<text class="iconfont" :class="item.url" style="font-size: 52rpx;position: absolute;left: 36rpx;"
+						:style="{ color: item.color }"></text>
+					<text>{{ item.text }}</text>
+				</view>
+			</view>
+			<view class="btn-wrap">
+				<navigator class="register" url="">注册</navigator>
+				<navigator class="login" url="/pages/toLogin/index">登录</navigator>
+			</view>
+			<view class="footer">
+				<text class="privacy">隐私政策</text>
+				<view class="dot"></view>
+				<text class="serve">服务条款</text>
 			</view>
 		</view>
-		<view class="btn-wrap">
-			<navigator class="register" url="">注册</navigator>
-			<navigator class="login" url="/pages/toLogin/index">登录</navigator>
-		</view>
-		<view class="footer">
-			<text class="privacy">隐私政策</text>
-			<view class="dot"></view>
-			<text class="serve">服务条款</text>
-		</view>
 	</view>
+
 </template>
 
 <script setup lang="ts">
+	// 获取屏幕边界到安全区域距离
+	const { safeAreaInsets } = uni.getSystemInfoSync()
 	import {
 		ref
 	} from 'vue';

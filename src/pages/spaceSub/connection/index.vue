@@ -7,39 +7,49 @@
 	}
 </route>
 <template>
-	<view class="connection_success">
-		<view class="connection_icon" v-if="showSuccess">
-			<wd-icon name="check" size="36px" color="#FFFFFF" class="icon"></wd-icon>
+	<view class="bg-white overflow-hidden pt-2 px-4" :style="{ marginTop: safeAreaInsets?.top + 'px' }">
+		<view class="connection_success">
+			<view class="connection_icon" v-if="showSuccess">
+				<wd-icon name="check" size="36px" color="#FFFFFF" class="icon"></wd-icon>
+			</view>
+			<view class="connection_icon" v-if="!showSuccess">
+				<wd-icon name="close" size="36px" color="#FFFFFF" class="icon"></wd-icon>
+			</view>
 		</view>
-		<view class="connection_icon" v-if="!showSuccess">
-			<wd-icon name="close" size="36px" color="#FFFFFF" class="icon"></wd-icon>
+		<view class="connection_tips">
+			<view class="title">
+				连接成功
+			</view>
+			<view class="text">
+				您已连接到 {{deviceName}}
+			</view>
 		</view>
-	</view>
-	<view class="connection_tips">
-		<view class="title">
-			连接成功
+		<view class="connection_image">
+			<image src="../../../static/avatar.jpg" mode=""></image>
 		</view>
-		<view class="text">
-			您已连接到 {{deviceName}}
+		<view class="connection_btn">
+			<wd-button class="btn_index" @click="toSpace">去首页</wd-button>
+			<wd-button class="btn_device" @click="toEquipment">控制装置</wd-button>
 		</view>
-	</view>
-	<view class="connection_image">
-		<image src="../../../static/avatar.jpg" mode=""></image>
-	</view>
-	<view class="connection_btn">
-		<wd-button class="btn_index" @click="toSpace">去首页</wd-button>
-		<wd-button class="btn_device">控制装置</wd-button>
 	</view>
 </template>
 
 <script lang="ts" setup>
 	import { ref } from 'vue';
+	// 获取屏幕边界到安全区域距离
+	const { safeAreaInsets } = uni.getSystemInfoSync()
+
 	const showSuccess = ref<boolean>(true);
 	const deviceName = ref('智能V1监控摄像头');
 
 	const toSpace = () => {
 		uni.switchTab({
 			url: '/pages/space/index'
+		});
+	}
+	const toEquipment = () => {
+		uni.navigateTo({
+			url: '/pages/spaceSub/equipment/index'
 		});
 	}
 </script>
@@ -93,7 +103,7 @@
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
-
+		padding-bottom: 50rpx;
 
 		.btn_index {
 			width: 336rpx;
