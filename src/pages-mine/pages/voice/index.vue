@@ -6,7 +6,7 @@
 }
 </route>
 <template>
-  <view class="overflow-hidden pt-2" :style="{ marginTop: safeAreaInsets?.top + 'px' }">
+  <view class="" style="min-height: 100vh;background-color: #f8f8f8;">
     <view class="container">
       <view class="wrap" @click="onJoin">
         <image src="../../../static/images/mine/voice/goole.png" mode=""></image>
@@ -48,15 +48,9 @@ const onJoin = () => {
 </script>
 
 <style lang="scss" scoped>
-body {
-  height: 100%;
-  background-color: #f8f8f8;
-}
-
 .container {
   display: flex;
   flex-wrap: wrap;
-  background-color: #f8f8f8;
 
   .wrap {
     display: flex;

@@ -8,7 +8,6 @@
 <template>
   <view
     class="bg-white overflow-hidden pt-2 px-4"
-    :style="{ marginTop: safeAreaInsets?.top + 'px' }"
   >
     <view class="container">
       <view class="wrap flex items-center justify-between">
@@ -28,8 +27,6 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-// 获取屏幕边界到安全区域距离
-const { safeAreaInsets } = uni.getSystemInfoSync()
 const handleSelect = () => {
   uni.navigateTo({
     url: '/pages-mine/pages/appearance/language',

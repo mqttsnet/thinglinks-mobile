@@ -79,5 +79,28 @@ export const httpPost = <T>(
   })
 }
 
+/**
+ * PUT 请求
+ * @param url 后台地址
+ * @param data 请求body参数
+ * @param query 请求query参数，post请求也支持query，很多微信接口都需要
+ * @returns
+ */
+export const httpPut = <T>(
+  url: string,
+  data?: Record<string, any>,
+  query?: Record<string, any>,
+  otherParams?: any,
+) => {
+  return http<T>({
+    url,
+    query,
+    data,
+    method: 'PUT',
+    ...otherParams,
+  })
+}
+
 http.get = httpGet
 http.post = httpPost
+http.put = httpPut

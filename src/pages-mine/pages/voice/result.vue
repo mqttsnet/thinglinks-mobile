@@ -6,14 +6,14 @@
 }
 </route>
 <template>
-  <view class="bg-white overflow-hidden pt-2" :style="{ marginTop: safeAreaInsets?.top + 'px' }">
+  <view class="bg-white overflow-hidden pt-2">
     <view class="container">
       <image src="../../../static/images/mine/voice/goole.png" mode=""></image>
       <view class="name m-2">已连接！</view>
       <view class="desc">
         您的 智慧空间 帐户现已与 Google Assistant无缝链接。准备好体验终极的免提控制。
       </view>
-      <wd-button class="join-btn" @click="onSuccess">好的</wd-button>
+      <view class="join-btn" @click="onSuccess">好的</view>
     </view>
   </view>
 </template>
@@ -59,8 +59,16 @@ const onSuccess = () => {
 
 .join-btn {
   position: fixed;
-  bottom: 48rpx;
-  left: 33rpx;
-  width: 680rpx;
+  left: 10px;
+  bottom: 10px;
+  width: 95%;
+  height: 116rpx;
+  line-height: 116rpx;
+  text-align: center;
+  border-radius: 116rpx; // 圆角的尺寸必须和heigt的值一样
+  background-color: #405ff2;
+  color: white;
+  font-size: 32rpx;
+  font-weight: 700;
 }
 </style>

@@ -59,6 +59,14 @@
       }
     },
     {
+      "path": "pages/dashboard/detail",
+      "type": "page",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "仪表盘"
+      }
+    },
+    {
       "path": "pages/dashboard/index",
       "type": "page",
       "style": {

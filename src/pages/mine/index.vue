@@ -130,6 +130,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { useToast } from 'wot-design-uni'
 import noAvatar from '@/static/images/header.jpg'
 import { getUserAvatar, logout, getUserInfoById } from '@/service/mine'
 import { useUserStore } from '@/store'
@@ -142,7 +143,7 @@ const show = ref(false)
 const avatar = ref<string>('')
 // 获取用户信息
 const getUserInfo = async () => {
-  UserInfo.value = userInfo
+  UserInfo.value = userInfo;
   const res = await getUserAvatar([userInfo.avatarId])
   avatar.value = res.data[userInfo.avatarId] ? res.data[userInfo.avatarId] : noAvatar
 }
@@ -159,10 +160,15 @@ const logOut = async () => {
   show.value = false
 }
 // 个人中心
+const toast = useToast()
 const toProfile = () => {
-  uni.navigateTo({
-    url: '/pages-mine/pages/profile/index',
-  })
+	if(userInfo){
+	  uni.navigateTo({
+		url: '/pages-mine/pages/profile/index',
+	  })
+	  }else{
+		  toast.warning('未登录，不可查看个人信息哦!')
+	  }
 }
 // 居所管理
 const toSpace = () => {
@@ -339,6 +345,7 @@ const toHelp = () => {
 }
 
 .popup {
+	margin-bottom: 0;
   .title {
     margin: 60rpx 0;
     font-size: 48rpx;

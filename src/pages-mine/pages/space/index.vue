@@ -6,7 +6,7 @@
 }
 </route>
 <template>
-  <view class="overflow-hidden pt-2 px-4" :style="{ marginTop: safeAreaInsets?.top + 'px' }">
+  <view class="pt-2 px-4" style="min-height: 100vh;background-color: #f8f8f8;">
     <view class="container">
       <view
         class="wrap flex justify-between items-center"
@@ -18,16 +18,14 @@
       </view>
     </view>
     <view class="btn flex flex-col">
-      <wd-button size="large">创建居所</wd-button>
-      <wd-button size="large" plain>加入居所</wd-button>
+      <view class="addBtn" size="large">创建居所</view>
+      <view class="joinBtn" size="large" plain>加入居所</view>
     </view>
   </view>
 </template>
 
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
-// 获取屏幕边界到安全区域距离
-const { safeAreaInsets } = uni.getSystemInfoSync()
 const checked = ref<boolean>(true)
 const list = reactive([
   {
@@ -46,15 +44,8 @@ const list = reactive([
 </script>
 
 <style lang="scss" scoped>
-body {
-  height: 100%;
-  background-color: #f8f8f8;
-}
 
 .container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
   background-color: #ffffff;
   border-radius: 20rpx;
 
@@ -69,9 +60,29 @@ body {
 }
 
 .btn {
-  .wd-button {
-    width: 100%;
-    margin-top: 40rpx;
+  .addBtn{
+	  width: 100%;
+	  height: 116rpx;
+	  line-height: 116rpx;
+	  text-align: center;
+	  border-radius: 116rpx; // 圆角的尺寸必须和heigt的值一样
+	  background-color: #405ff2;
+	  color: white;
+	  font-size: 32rpx;
+	  font-weight: 700;
+	  margin: 10px 0;
+  }
+  .joinBtn{
+	  width: 100%;
+	  height: 116rpx;
+	  line-height: 116rpx;
+	  text-align: center;
+	  border-radius: 116rpx; // 圆角的尺寸必须和heigt的值一样
+	  border: 1px  #405ff2 solid;
+	  // background-color: #405ff2;
+	  color:  #405ff2;
+	  font-size: 32rpx;
+	  font-weight: 700;
   }
 }
 </style>

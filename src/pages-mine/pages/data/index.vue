@@ -7,8 +7,7 @@
 </route>
 <template>
   <view
-    class="bg-white overflow-hidden pt-2 px-2"
-    :style="{ marginTop: safeAreaInsets?.top + 'px' }"
+    class="bg-white overflow-hidden px-2"
   >
     <view class="container">
       <view class="wrap flex items-center justify-between">
@@ -44,8 +43,6 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-// 获取屏幕边界到安全区域距离
-const { safeAreaInsets } = uni.getSystemInfoSync()
 </script>
 
 <style lang="scss" scoped>
