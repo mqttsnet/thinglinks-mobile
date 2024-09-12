@@ -8,7 +8,6 @@
 <template>
   <view
     class="bg-white overflow-hidden pt-2 px-4"
-    :style="{ marginTop: safeAreaInsets?.top + 'px' }"
   >
     <view class="container">
       <view class="wrap flex items-center justify-between">

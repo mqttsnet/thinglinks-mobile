@@ -6,7 +6,7 @@
 }
 </route>
 <template>
-  <view class="overflow-hidden pt-2 px-4" :style="{ marginTop: safeAreaInsets?.top + 'px' }">
+  <view class="overflow-hidden pt-2 px-4" style="min-height: 100vh;background-color: #f8f8f8;">
     <view class="container">
       <view class="wrap flex items-center justify-between m-2.5">
         <view class="help-name">
@@ -46,11 +46,6 @@ const { safeAreaInsets } = uni.getSystemInfoSync()
 </script>
 
 <style lang="scss" scoped>
-body {
-  height: 100%;
-  background-color: #f8f8f8;
-}
-
 .container {
   background-color: #f8f8f8;
 
