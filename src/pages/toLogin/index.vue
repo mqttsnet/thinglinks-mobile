@@ -16,7 +16,7 @@
       <navigator open-type="navigateBack"></navigator>
       <view class="title-wrap">
         <text class="title">欢迎回来!</text>
-        <text class="p">登录后享受智能生活。</text>
+        <text class="p">Welcome to Thinglinks!</text>
       </view>
       <view class="content">
         <view class="mailbox">
