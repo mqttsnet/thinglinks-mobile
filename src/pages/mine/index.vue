@@ -21,7 +21,9 @@
           <image class="avatar" :src="avatar || noAvatar" mode="aspectFill" />
           <view class="user-details">
             <text class="name">{{ UserInfo?.nickName || '未登录' }}</text>
-            <text class="email">{{ UserInfo?.email }}</text>
+            <!-- <text class="email">{{ UserInfo?.tenantName }}</text> -->
+            <!-- <text class="email">{{ UserInfo?.tenantId }}</text>x -->
+            <wd-tag type="primary" round>{{ UserInfo?.tenantName }}</wd-tag>
           </view>
         </view>
         <view class="nav-btn">
@@ -99,6 +101,13 @@
           <view class="menu-left">
             <text class="iconfont icon-bangzhuzhichi_chanpinwendang icon"></text>
             <text class="menu-name">帮助支持</text>
+          </view>
+          <view><wd-icon name="chevron-right" size="22px"></wd-icon></view>
+        </view>
+        <view class="menu-item flex items-center justify-between" @click="toHelp">
+          <view class="menu-left">
+            <wd-icon class="icon" name="swap" size="22px"></wd-icon>
+            <text class="menu-name">切换企业和组织</text>
           </view>
           <view><wd-icon name="chevron-right" size="22px"></wd-icon></view>
         </view>
