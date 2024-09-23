@@ -167,5 +167,102 @@
       }
     }
   ],
-  "subPackages": []
+  "subPackages": [
+    {
+      "root": "pages_mine/pages",
+      "pages": [
+        {
+          "path": "account/index",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "账户与安全"
+          }
+        },
+        {
+          "path": "appearance/index",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "应用程序外观"
+          }
+        },
+        {
+          "path": "appearance/language",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "应用程序语言"
+          }
+        },
+        {
+          "path": "data/index",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "数据与分析"
+          }
+        },
+        {
+          "path": "help/index",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "联系我们"
+          }
+        },
+        {
+          "path": "notification/index",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "通知"
+          }
+        },
+        {
+          "path": "profile/index",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "个人信息"
+          }
+        },
+        {
+          "path": "relevance/index",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "关联账户"
+          }
+        },
+        {
+          "path": "setting/index",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "其他设置"
+          }
+        },
+        {
+          "path": "space/index",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "空间管理"
+          }
+        },
+        {
+          "path": "voice/index",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "语音助手"
+          }
+        },
+        {
+          "path": "voice/join",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "语音助手"
+          }
+        },
+        {
+          "path": "voice/result",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "语音助手"
+          }
+        }
+      ]
+    }
+  ]
 }

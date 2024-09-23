@@ -7,7 +7,6 @@ export const http = <T>(options: CustomRequestOptions) => {
       dataType: 'json',
       // #ifndef MP-WEIXIN
       responseType: 'json',
-      ...options,
       // #endif
       // 响应成功
       success(res) {
@@ -38,6 +37,7 @@ export const http = <T>(options: CustomRequestOptions) => {
         })
         reject(err)
       },
+      ...options,
     })
   })
 }
