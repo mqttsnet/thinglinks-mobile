@@ -18,19 +18,19 @@ interface NavigateToOptions {
        "/pages/spaceSub/connection/index" |
        "/pages/spaceSub/equipment/index" |
        "/pages/spaceSub/select/index" |
-       "/pages-mine/pages/account/index" |
-       "/pages-mine/pages/appearance/index" |
-       "/pages-mine/pages/appearance/language" |
-       "/pages-mine/pages/data/index" |
-       "/pages-mine/pages/help/index" |
-       "/pages-mine/pages/notification/index" |
-       "/pages-mine/pages/profile/index" |
-       "/pages-mine/pages/relevance/index" |
-       "/pages-mine/pages/setting/index" |
-       "/pages-mine/pages/space/index" |
-       "/pages-mine/pages/voice/index" |
-       "/pages-mine/pages/voice/join" |
-       "/pages-mine/pages/voice/result";
+       "/pages_mine/pages/account/index" |
+       "/pages_mine/pages/appearance/index" |
+       "/pages_mine/pages/appearance/language" |
+       "/pages_mine/pages/data/index" |
+       "/pages_mine/pages/help/index" |
+       "/pages_mine/pages/notification/index" |
+       "/pages_mine/pages/profile/index" |
+       "/pages_mine/pages/relevance/index" |
+       "/pages_mine/pages/setting/index" |
+       "/pages_mine/pages/space/index" |
+       "/pages_mine/pages/voice/index" |
+       "/pages_mine/pages/voice/join" |
+       "/pages_mine/pages/voice/result";
 }
 interface RedirectToOptions extends NavigateToOptions {}
 
