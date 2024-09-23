@@ -42,7 +42,7 @@
 const { safeAreaInsets } = uni.getSystemInfoSync()
 const onJoin = () => {
   uni.navigateTo({
-    url: '/pages-mine/pages/voice/join',
+    url: '/pages_mine/pages/voice/join',
   })
 }
 </script>

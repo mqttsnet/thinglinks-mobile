@@ -27,7 +27,7 @@
 import { ref } from 'vue'
 const handleSelect = () => {
   uni.navigateTo({
-    url: '/pages-mine/pages/appearance/language',
+    url: '/pages_mine/pages/appearance/language',
   })
 }
 </script>

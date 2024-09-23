@@ -27,7 +27,7 @@ const onJoin = () => {
   setTimeout(function () {
     uni.hideLoading()
     uni.navigateTo({
-      url: '/pages-mine/pages/voice/result',
+      url: '/pages_mine/pages/voice/result',
     })
   }, 2000)
 }

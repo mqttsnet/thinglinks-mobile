@@ -143,7 +143,7 @@ const show = ref(false)
 const avatar = ref<string>('')
 // 获取用户信息
 const getUserInfo = async () => {
-  UserInfo.value = userInfo;
+  UserInfo.value = userInfo
   const res = await getUserAvatar([userInfo.avatarId])
   avatar.value = res.data[userInfo.avatarId] ? res.data[userInfo.avatarId] : noAvatar
 }
@@ -162,66 +162,66 @@ const logOut = async () => {
 // 个人中心
 const toast = useToast()
 const toProfile = () => {
-	if(userInfo){
-	  uni.navigateTo({
-		url: '/pages-mine/pages/profile/index',
-	  })
-	  }else{
-		  toast.warning('未登录，不可查看个人信息哦!')
-	  }
+  if (userInfo) {
+    uni.navigateTo({
+      url: '/pages_mine/pages/profile/index',
+    })
+  } else {
+    toast.warning('未登录，不可查看个人信息哦!')
+  }
 }
 // 居所管理
 const toSpace = () => {
   uni.navigateTo({
-    url: '/pages-mine/pages/space/index',
+    url: '/pages_mine/pages/space/index',
   })
 }
 // 语音助手
 const toVoice = () => {
   uni.navigateTo({
-    url: '/pages-mine/pages/voice/index',
+    url: '/pages_mine/pages/voice/index',
   })
 }
 // 通知设置
 const toNotification = () => {
   uni.navigateTo({
-    url: '/pages-mine/pages/notification/index',
+    url: '/pages_mine/pages/notification/index',
   })
 }
 // 账户安全
 const toAccount = () => {
   uni.navigateTo({
-    url: '/pages-mine/pages/account/index',
+    url: '/pages_mine/pages/account/index',
   })
 }
 // 关联账户
 const toRselevance = () => {
   uni.navigateTo({
-    url: '/pages-mine/pages/relevance/index',
+    url: '/pages_mine/pages/relevance/index',
   })
 }
 // 应用程序外观
 const toAppearance = () => {
   uni.navigateTo({
-    url: '/pages-mine/pages/appearance/index',
+    url: '/pages_mine/pages/appearance/index',
   })
 }
 // 其他设置
 const toSetting = () => {
   uni.navigateTo({
-    url: '/pages-mine/pages/setting/index',
+    url: '/pages_mine/pages/setting/index',
   })
 }
 // 数据与分析
 const toData = () => {
   uni.navigateTo({
-    url: '/pages-mine/pages/data/index',
+    url: '/pages_mine/pages/data/index',
   })
 }
 // 帮助支持
 const toHelp = () => {
   uni.navigateTo({
-    url: '/pages-mine/pages/help/index',
+    url: '/pages_mine/pages/help/index',
   })
 }
 </script>
@@ -345,7 +345,7 @@ const toHelp = () => {
 }
 
 .popup {
-	margin-bottom: 0;
+  margin-bottom: 0;
   .title {
     margin: 60rpx 0;
     font-size: 48rpx;

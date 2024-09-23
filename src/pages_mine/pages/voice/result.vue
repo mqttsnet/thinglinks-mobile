@@ -23,7 +23,7 @@
 const { safeAreaInsets } = uni.getSystemInfoSync()
 const onSuccess = () => {
   uni.navigateTo({
-    url: '/pages-mine/pages/voice/index',
+    url: '/pages_mine/pages/voice/index',
   })
 }
 </script>
