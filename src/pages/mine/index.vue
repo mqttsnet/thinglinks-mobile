@@ -13,8 +13,8 @@
   >
     <view class="container">
       <view class="weep">
-        <text class="iconfont icon-saoyisao"></text>
-        <text class="iconfont icon-gengduo"></text>
+        <!-- <text class="iconfont icon-saoyisao"></text> -->
+        <!-- <text class="iconfont icon-gengduo"></text> -->
       </view>
       <view class="header">
         <view class="user-info" @click="toProfile">
