@@ -104,10 +104,10 @@
           </view>
           <view><wd-icon name="chevron-right" size="22px"></wd-icon></view>
         </view>
-        <view class="menu-item flex items-center justify-between" @click="toHelp">
+        <view class="menu-item flex items-center justify-between" @click="switchDepartments">
           <view class="menu-left">
             <wd-icon class="icon" name="swap" size="22px"></wd-icon>
-            <text class="menu-name">切换企业和组织</text>
+            <text class="menu-name">切换企业</text>
           </view>
           <view><wd-icon name="chevron-right" size="22px"></wd-icon></view>
         </view>
@@ -133,6 +133,28 @@
           <wd-button @click="logOut">是的，退出</wd-button>
         </view>
       </view>
+    </wd-popup>
+    <!-- 切换企业 -->
+    <wd-popup
+      v-model="showSwitchDept"
+      custom-style="padding: 30px 40px;"
+      @close="showSwitchDept = false"
+    >
+      <div>
+        <div class="title">切换企业</div>
+        <wd-swiper
+          :list="deptList"
+          :autoplay="false"
+          v-model:current="currentDept"
+          :indicator="{ showControls: true }"
+          :loop="false"
+          @change="changeDept"
+        ></wd-swiper>
+        <div class="switch-dept-footer">
+          <wd-button type="info" @click="showSwitchDept = false">取消</wd-button>
+          <wd-button>确认</wd-button>
+        </div>
+      </div>
     </wd-popup>
   </view>
 </template>
@@ -233,6 +255,15 @@ const toHelp = () => {
     url: '/pages_mine/pages/help/index',
   })
 }
+
+// 切换企业和组织
+const showSwitchDept = ref(false)
+const deptList = ref([])
+const currentDept = ref(0)
+const switchDepartments = () => {
+  showSwitchDept.value = true
+}
+const changeDept = () => {}
 </script>
 
 <style lang="scss" scoped>
