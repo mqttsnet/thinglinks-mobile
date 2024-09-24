@@ -276,9 +276,9 @@ const handleSubmit = async () => {
       })
       return
     }
-    console.log('Submitting form with data:', formData)
+    // console.log('Submitting form with data:',
     const res = await login({ ...formData, grantType: formData.grantType, key: formData.key })
-    console.log(res)
+    // console.log(res)
     if (res?.data) {
       const { token, tenantId, refreshToken, expiration } = res.data
       userStore.setState({
@@ -289,18 +289,24 @@ const handleSubmit = async () => {
       })
       return await afterLogin()
     } else {
-      console.error('Login failed: no data in response')
+      // console.error('Login failed: no data in response')
       uni.showToast({
-        title: '登录失败，未返回数据',
+        title: res.msg,
         icon: 'none',
       })
     }
   } catch (error) {
-    console.error('Error in handleSubmit:', error)
-    uni.showToast({
-      title: error.message || '登录失败，出现错误',
-      icon: 'none',
-    })
+    // console.error('Error in handleSubmit:', error)
+    const { msg = '', code = 0 } = error.data
+    if (msg) {
+      uni.showToast({
+        title: msg || '登录失败，出现错误',
+        icon: 'none',
+      })
+      if (code === -9 && msg === '验证码过期') {
+        buildCaptcha()
+      }
+    }
   }
 }
 
