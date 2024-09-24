@@ -160,7 +160,7 @@
             @click="changeDept(dept)"
           >
             <text class="dept-name">{{ dept.name }}</text>
-            <text class="dept-name">{{ dept.id }}</text>
+            <!-- <text class="dept-name">{{ dept.id }}</text> -->
             <view v-if="index === currentDeptIndex" class="selected-dept-icon">
               <wd-icon name="check"></wd-icon>
             </view>
