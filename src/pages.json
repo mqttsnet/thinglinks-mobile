@@ -167,5 +167,102 @@
       }
     }
   ],
-  "subPackages": []
+  "subPackages": [
+    {
+      "root": "pages-mine",
+      "pages": [
+        {
+          "path": "pages/account/index",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "账户与安全"
+          }
+        },
+        {
+          "path": "pages/appearance/index",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "应用程序外观"
+          }
+        },
+        {
+          "path": "pages/appearance/language",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "应用程序语言"
+          }
+        },
+        {
+          "path": "pages/data/index",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "数据与分析"
+          }
+        },
+        {
+          "path": "pages/help/index",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "联系我们"
+          }
+        },
+        {
+          "path": "pages/notification/index",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "通知"
+          }
+        },
+        {
+          "path": "pages/profile/index",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "个人信息"
+          }
+        },
+        {
+          "path": "pages/relevance/index",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "关联账户"
+          }
+        },
+        {
+          "path": "pages/setting/index",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "其他设置"
+          }
+        },
+        {
+          "path": "pages/space/index",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "空间管理"
+          }
+        },
+        {
+          "path": "pages/voice/index",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "语音助手"
+          }
+        },
+        {
+          "path": "pages/voice/join",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "语音助手"
+          }
+        },
+        {
+          "path": "pages/voice/result",
+          "type": "mine",
+          "style": {
+            "navigationBarTitleText": "语音助手"
+          }
+        }
+      ]
+    }
+  ]
 }
