@@ -169,94 +169,94 @@
   ],
   "subPackages": [
     {
-      "root": "pages-mine",
+      "root": "pages_mine/pages",
       "pages": [
         {
-          "path": "pages/account/index",
+          "path": "account/index",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "账户与安全"
           }
         },
         {
-          "path": "pages/appearance/index",
+          "path": "appearance/index",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "应用程序外观"
           }
         },
         {
-          "path": "pages/appearance/language",
+          "path": "appearance/language",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "应用程序语言"
           }
         },
         {
-          "path": "pages/data/index",
+          "path": "data/index",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "数据与分析"
           }
         },
         {
-          "path": "pages/help/index",
+          "path": "help/index",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "联系我们"
           }
         },
         {
-          "path": "pages/notification/index",
+          "path": "notification/index",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "通知"
           }
         },
         {
-          "path": "pages/profile/index",
+          "path": "profile/index",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "个人信息"
           }
         },
         {
-          "path": "pages/relevance/index",
+          "path": "relevance/index",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "关联账户"
           }
         },
         {
-          "path": "pages/setting/index",
+          "path": "setting/index",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "其他设置"
           }
         },
         {
-          "path": "pages/space/index",
+          "path": "space/index",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "空间管理"
           }
         },
         {
-          "path": "pages/voice/index",
+          "path": "voice/index",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "语音助手"
           }
         },
         {
-          "path": "pages/voice/join",
+          "path": "voice/join",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "语音助手"
           }
         },
         {
-          "path": "pages/voice/result",
+          "path": "voice/result",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "语音助手"
