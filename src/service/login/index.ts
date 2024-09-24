@@ -21,3 +21,12 @@ export const getUserInfoById = async (params?: any) => {
     },
   )
 }
+export const getTenantList = async (params?: any) => {
+  return http.get<any>(
+    '/oauth/anyone/findCompanyDept',
+    { _t: +new Date() },
+    {
+      tenantId: params?.tenantId,
+    },
+  )
+}
