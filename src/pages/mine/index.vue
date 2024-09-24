@@ -154,18 +154,20 @@
         <view class="dept-list">
           <view
             class="dept-item"
-            :class="{ 'selected-dept': dept.id === TenantId }"
-            v-for="dept in deptList"
+            :class="{ 'selected-dept': index === currentDeptIndex }"
+            v-for="(dept, index) in deptList"
             :key="dept.id"
+            @click="changeDept(dept)"
           >
             <text class="dept-name">{{ dept.name }}</text>
-            <view v-if="dept.id === TenantId" class="selected-dept-icon">
+            <text class="dept-name">{{ dept.id }}</text>
+            <view v-if="index === currentDeptIndex" class="selected-dept-icon">
               <wd-icon name="check"></wd-icon>
             </view>
           </view>
         </view>
         <view class="switch-dept-footer">
-          <wd-button>确认</wd-button>
+          <wd-button @click="confirmSwitchDept">确认</wd-button>
         </view>
       </view>
     </wd-action-sheet>
@@ -177,7 +179,7 @@ import { ref, computed } from 'vue'
 import { useToast } from 'wot-design-uni'
 import noAvatar from '@/static/images/header.jpg'
 import { getUserAvatar, logout, getUserInfoById } from '@/service/mine'
-import { getTenantList } from '@/service/login'
+import { getTenantList, switchDept } from '@/service/login'
 import { useUserStore } from '@/store'
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
@@ -188,8 +190,8 @@ const TenantId = ref(tenantId)
 const show = ref(false)
 const avatar = ref<string>('')
 // 获取用户信息
-const getUserInfo = async () => {
-  UserInfo.value = userInfo
+const getUserInfo = async (info = null) => {
+  UserInfo.value = info || userInfo
   const res = await getUserAvatar([userInfo.avatarId])
   avatar.value = res.data[userInfo.avatarId] ? res.data[userInfo.avatarId] : noAvatar
 }
@@ -281,7 +283,6 @@ const getTenantListFn = async () => {
     tenantId,
   })
   const { tenantList = [] } = res.data
-  console.log(res, tenantList, TenantId.value)
   if (tenantList.length) {
     deptList.value = tenantList
     currentDeptIndex.value = deptList.value.findIndex((dept) => dept.id === tenantId)
@@ -292,7 +293,64 @@ const switchDepartments = () => {
   getTenantListFn()
   showSwitchDept.value = true
 }
-const changeDept = () => {}
+const changeDept = (selectedDept) => {
+  currentDeptIndex.value = deptList.value.findIndex((dept) => dept.id === selectedDept.id)
+}
+const getUserInfoByIdHandle = async (params?: any) => {
+  const userInfo = await getUserInfoById(params)
+  userStore.setState({
+    userInfo: userInfo.data,
+  })
+  return userInfo?.data
+}
+
+const afterLogin = async () => {
+  const { sessionTimeout } = userStore.state
+  const userInfo = await getUserInfoByIdHandle()
+  getUserInfo(userInfo)
+  uni.switchTab({
+    url: '/pages/space/index',
+  })
+  return userInfo
+}
+const confirmSwitchDept = async () => {
+  try {
+    const selectedDept = deptList.value[currentDeptIndex.value]
+    const res = await switchDept({
+      tenantId: selectedDept.id,
+    })
+    if (res?.data) {
+      const { token, tenantId, refreshToken, expiration } = res.data
+      userStore.setState({
+        token,
+        tenantId,
+        refreshToken,
+        expireTime: expiration,
+      })
+      uni.showToast({
+        title: '切换成功，请稍后',
+        icon: 'none',
+      })
+      setTimeout(async () => {
+        await afterLogin()
+        showSwitchDept.value = false
+      }, 1000)
+    } else {
+      uni.showToast({
+        title: res.msg,
+        icon: 'none',
+      })
+    }
+  } catch (error) {
+    const { msg = '', code = 0 } = error.data
+    if (msg) {
+      uni.showToast({
+        title: msg || '切换失败，请重试',
+        icon: 'none',
+      })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
