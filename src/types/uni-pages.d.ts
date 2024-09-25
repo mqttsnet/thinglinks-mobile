@@ -11,6 +11,7 @@ interface NavigateToOptions {
        "/pages/mine/index" |
        "/pages/scene/index" |
        "/pages/space/index" |
+       "/pages/toLogin/index" |
        "/pages_mine/pages/account/index" |
        "/pages_mine/pages/appearance/index" |
        "/pages_mine/pages/appearance/language" |

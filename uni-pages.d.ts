@@ -10,7 +10,8 @@ interface NavigateToOptions {
        "/pages/guide/index" |
        "/pages/mine/index" |
        "/pages/scene/index" |
-       "/pages/space/index";
+       "/pages/space/index" |
+       "/pages/toLogin/index";
 }
 interface RedirectToOptions extends NavigateToOptions {}
 

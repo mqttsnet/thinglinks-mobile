@@ -105,6 +105,15 @@
         "navigationStyle": "custom",
         "navigationBarTitleText": "空间"
       }
+    },
+    {
+      "path": "pages/toLogin/index",
+      "type": "page",
+      "layout": "demo",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "登录"
+      }
     }
   ],
   "subPackages": []

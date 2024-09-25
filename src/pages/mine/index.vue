@@ -135,46 +135,63 @@
       </view>
     </wd-popup>
     <!-- 切换企业 -->
-    <wd-popup
+    <wd-action-sheet
+      title="切换企业"
       v-model="showSwitchDept"
-      custom-style="padding: 30px 40px;"
+      custom-class="switch-dept"
+      custom-style="padding: 10px 20px;"
       @close="showSwitchDept = false"
     >
-      <div>
-        <div class="title">切换企业</div>
-        <wd-swiper
+      <view class="switch-dept-wrap">
+        <!-- <wd-swiper
           :list="deptList"
           :autoplay="false"
           v-model:current="currentDept"
           :indicator="{ showControls: true }"
           :loop="false"
           @change="changeDept"
-        ></wd-swiper>
-        <div class="switch-dept-footer">
-          <wd-button type="info" @click="showSwitchDept = false">取消</wd-button>
-          <wd-button>确认</wd-button>
-        </div>
-      </div>
-    </wd-popup>
+        ></wd-swiper> -->
+        <view class="dept-list">
+          <view
+            class="dept-item"
+            :class="{ 'selected-dept': index === currentDeptIndex }"
+            v-for="(dept, index) in deptList"
+            :key="dept.id"
+            @click="changeDept(dept)"
+          >
+            <text class="dept-name">{{ dept.name }}</text>
+            <!-- <text class="dept-name">{{ dept.id }}</text> -->
+            <view v-if="index === currentDeptIndex" class="selected-dept-icon">
+              <wd-icon name="check"></wd-icon>
+            </view>
+          </view>
+        </view>
+        <view class="switch-dept-footer">
+          <wd-button @click="confirmSwitchDept">确认</wd-button>
+        </view>
+      </view>
+    </wd-action-sheet>
   </view>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useToast } from 'wot-design-uni'
 import noAvatar from '@/static/images/header.jpg'
 import { getUserAvatar, logout, getUserInfoById } from '@/service/mine'
+import { getTenantList, switchDept } from '@/service/login'
 import { useUserStore } from '@/store'
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
 const userStore = useUserStore()
-const { userInfo } = userStore.state
+const { userInfo, tenantId } = userStore.state
 const UserInfo = ref<any>({})
+const TenantId = ref(tenantId)
 const show = ref(false)
 const avatar = ref<string>('')
 // 获取用户信息
-const getUserInfo = async () => {
-  UserInfo.value = userInfo
+const getUserInfo = async (info = null) => {
+  UserInfo.value = info || userInfo
   const res = await getUserAvatar([userInfo.avatarId])
   avatar.value = res.data[userInfo.avatarId] ? res.data[userInfo.avatarId] : noAvatar
 }
@@ -259,11 +276,81 @@ const toHelp = () => {
 // 切换企业和组织
 const showSwitchDept = ref(false)
 const deptList = ref([])
-const currentDept = ref(0)
+const currentDeptIndex = ref(0)
+// 获取切换租户列表
+const getTenantListFn = async () => {
+  const res = await getTenantList({
+    tenantId,
+  })
+  const { tenantList = [] } = res.data
+  if (tenantList.length) {
+    deptList.value = tenantList
+    currentDeptIndex.value = deptList.value.findIndex((dept) => dept.id === tenantId)
+  }
+}
+// 点击菜单初始化数据，显示切换弹窗
 const switchDepartments = () => {
+  getTenantListFn()
   showSwitchDept.value = true
 }
-const changeDept = () => {}
+const changeDept = (selectedDept) => {
+  currentDeptIndex.value = deptList.value.findIndex((dept) => dept.id === selectedDept.id)
+}
+const getUserInfoByIdHandle = async (params?: any) => {
+  const userInfo = await getUserInfoById(params)
+  userStore.setState({
+    userInfo: userInfo.data,
+  })
+  return userInfo?.data
+}
+
+const afterLogin = async () => {
+  const { sessionTimeout } = userStore.state
+  const userInfo = await getUserInfoByIdHandle()
+  getUserInfo(userInfo)
+  uni.switchTab({
+    url: '/pages/space/index',
+  })
+  return userInfo
+}
+const confirmSwitchDept = async () => {
+  try {
+    const selectedDept = deptList.value[currentDeptIndex.value]
+    const res = await switchDept({
+      tenantId: selectedDept.id,
+    })
+    if (res?.data) {
+      const { token, tenantId, refreshToken, expiration } = res.data
+      userStore.setState({
+        token,
+        tenantId,
+        refreshToken,
+        expireTime: expiration,
+      })
+      uni.showToast({
+        title: '切换成功，请稍后',
+        icon: 'none',
+      })
+      setTimeout(async () => {
+        await afterLogin()
+        showSwitchDept.value = false
+      }, 1000)
+    } else {
+      uni.showToast({
+        title: res.msg,
+        icon: 'none',
+      })
+    }
+  } catch (error) {
+    const { msg = '', code = 0 } = error.data
+    if (msg) {
+      uni.showToast({
+        title: msg || '切换失败，请重试',
+        icon: 'none',
+      })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -407,6 +494,66 @@ const changeDept = () => {}
   .logout-btn {
     width: 80%;
     padding: 40rpx 0 0 0;
+  }
+}
+</style>
+<style lang="scss">
+.switch-dept {
+  .wd-action-sheet__header {
+    height: 100rpx;
+    line-height: 100rpx;
+  }
+  .switch-dept-wrap {
+    width: 100%;
+    height: 100%;
+    .dept-list {
+      max-height: 410rpx;
+      margin-bottom: 40rpx;
+      overflow-y: auto;
+      .dept-item {
+        position: relative;
+        height: 100rpx;
+        line-height: 100rpx;
+        text-align: center;
+        border: 1px solid #e8e8e8;
+        .dept-name {
+          display: inline-block;
+          max-width: 80%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+      .dept-item:not(:first-child) {
+        margin-top: -1px;
+      }
+      .selected-dept {
+        z-index: 2;
+        color: #475ee9;
+        border: 1px solid #475ee9;
+      }
+      .selected-dept-icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 0;
+        height: 0;
+        border-top: 30rpx solid #475ee9;
+        border-right: 30rpx solid #475ee9;
+        border-bottom: 30rpx solid transparent;
+        border-left: 30rpx solid transparent;
+        .wd-icon-check {
+          position: absolute;
+          top: -55rpx;
+          left: 1rpx;
+          font-size: 25rpx !important;
+          color: white;
+        }
+      }
+    }
+    .switch-dept-footer {
+      text-align: end;
+    }
   }
 }
 </style>
