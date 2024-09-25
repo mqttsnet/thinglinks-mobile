@@ -8,8 +8,8 @@
 	}
 </route>
 <template>
-	<view class="overflow-hidden pt-2 px-4"
-		:style="{ marginTop: safeAreaInsets?.top + 'px' , backgroundColor: '#f5f5f5' , minHeight: '100' + 'vh'}">
+	<view class="overflow-hidden pt-2 px-4" :style="{ paddingTop: safeAreaInsets?.top + 'px' }"
+		style="background-color: #f5f5f5;min-height: 100vh;">
 		<view class="space_top">
 			<view class="space_top_item" @click="toSelect">
 				<view class="" style="font-size: 48rpx;color: #212121;font-weight: 650;">
@@ -19,12 +19,12 @@
 					<wd-icon name="arrow-down" size="45rpx" color="#212121"></wd-icon>
 				</view>
 			</view>
-			<view class="space_top_items">
-				<view class="" style="margin-right: 45rpx;">
-					<text class="iconfont icon-zhinengjiqiren" style="font-size: 80rpx;color: #405ff2;"></text>
+			<view class="space_top_right">
+				<view class="" style="margin-right: 60rpx;">
+					<text class="iconfont icon-zhinengjiqiren" style="font-size: 60rpx;"></text>
 				</view>
 				<view class="">
-					<text class="iconfont icon-tongzhi" style="font-size: 50rpx;"></text>
+					<wd-icon name="notification-filled" size="22px"></wd-icon>
 				</view>
 			</view>
 		</view>
@@ -181,7 +181,7 @@
 
 	const toSelect = () => {
 		uni.navigateTo({
-			url: '/pages/spaceSub/select/index'
+			url: '/pages_space/select/index'
 		});
 	}
 	const selectItem = (index : any) => {
@@ -192,7 +192,7 @@
 	};
 	const toAddDevice = () => {
 		uni.navigateTo({
-			url: '/pages/spaceSub/addDevice/index'
+			url: '/pages_space/addDevice/index'
 		});
 		showDevice.value = false;
 	}
@@ -230,6 +230,7 @@
 <style lang="scss" scoped>
 	.space_top {
 		display: flex;
+		justify-content: space-between;
 		align-items: center;
 
 		.space_top_item {
@@ -237,22 +238,13 @@
 			align-items: center;
 		}
 
-		// #ifndef MP-WEIXIN
-		.space_top_items {
+		.space_top_right {
 			display: flex;
 			align-items: center;
-			margin-left: 260rpx;
+			/*#ifdef MP*/
+			margin-right: 180rpx;
+			/*#endif*/
 		}
-
-		// #endif
-		// #ifdef MP-WEIXIN
-		.space_top_items {
-			display: flex;
-			align-items: center;
-			margin-left: 130rpx;
-		}
-
-		// #endif
 	}
 
 	.space_day {

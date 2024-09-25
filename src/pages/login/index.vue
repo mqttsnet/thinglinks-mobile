@@ -22,8 +22,8 @@
 				</view>
 			</view>
 			<view class="btn-wrap">
-				<navigator class="register" url="">注册</navigator>
-				<navigator class="login" url="/pages/toLogin/index">登录</navigator>
+				<navigator class="register" url="/pages_login/pages/register/index">注册</navigator>
+				<navigator class="login" url="/pages_login/pages/password/index">登录</navigator>
 			</view>
 			<view class="footer">
 				<text class="privacy">隐私政策</text>
@@ -99,7 +99,7 @@
 	const loginWithPhone = () => {
 		console.log('手机号登录');
 		uni.navigateTo({
-			url: '/pages/login/toPhoneLogin/index'
+			url: '/pages_login/pages/phone/index'
 		})
 	};
 </script>

@@ -49,7 +49,7 @@
 	}
 	const toEquipment = () => {
 		uni.navigateTo({
-			url: '/pages/spaceSub/equipment/index'
+			url: '/pages_space/pages/equipment/index'
 		});
 	}
 </script>
