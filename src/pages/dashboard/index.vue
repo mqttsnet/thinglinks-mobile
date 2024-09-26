@@ -1,10 +1,10 @@
 <route lang="json5">
-{
-  style: {
-    navigationStyle: 'custom',
-    navigationBarTitleText: '仪表盘',
-  },
-}
+	{
+	style: {
+	navigationStyle: 'custom',
+	navigationBarTitleText: '仪表盘',
+	},
+	}
 </route>
 <template>
 	<view class="overflow-hidden pt-2 px-4" :style="{ paddingTop: safeAreaInsets?.top + 'px' }"
@@ -71,14 +71,15 @@
 						统计数据
 					</view>
 					<!-- <view class=""> -->
-						<wd-picker :columns="columns" v-model="clomnValue" use-default-slot>
-						  <wd-button plain type="info">{{clomnValue}}<wd-icon name="chevron-down" size="20px"></wd-icon></wd-button>
-						</wd-picker>
-						<!-- 过去六个月 -->
+					<wd-picker :columns="columns" v-model="clomnValue" use-default-slot>
+						<wd-button plain type="info">{{clomnValue}}<wd-icon name="chevron-down"
+								size="20px"></wd-icon></wd-button>
+					</wd-picker>
+					<!-- 过去六个月 -->
 					<!-- </view> -->
 				</view>
 				<view class="charts-box">
-					<qiun-data-charts type="column" :chartData="chartData" />
+					<qiun-data-charts class="canvas" type="column" :chartData="chartData" />
 				</view>
 			</view>
 		</view>
@@ -126,7 +127,7 @@
 	// 跳转至选择页
 	const toSelect = () => {
 		uni.navigateTo({
-			url: '/pages/spaceSub/select/index'
+			url: '/pages_space/pages/select/index'
 		});
 	}
 	const toDetail = () => {
@@ -139,8 +140,8 @@
 	function handleConfirm({ value }) {
 		console.log(value)
 	}
-const columns = ref(['今天', '本周', '上个月', '过去三个月', '过去六个月', '今年', '去年'])
-const clomnValue=ref("过去六个月")
+	const columns = ref(['今天', '本周', '上个月', '过去三个月', '过去六个月', '今年', '去年'])
+	const clomnValue = ref("过去六个月")
 	// 设备数据
 	const list = ref(['所有空间', '客厅', '卧室', '厨房', '浴室']);
 	const selectedIndex = ref(0);
@@ -211,6 +212,7 @@ const clomnValue=ref("过去六个月")
 			display: flex;
 			align-items: center;
 		}
+
 		.space_top_right {
 			display: flex;
 			align-items: center;
@@ -238,6 +240,14 @@ const clomnValue=ref("过去六个月")
 			.charts-box {
 				width: 100%;
 				height: 300px;
+
+				:deep(canvas) {
+					z-index: 1;
+				}
+			}
+
+			:deep(.wd-popup) {
+				z-index: 999 !important;
 			}
 		}
 	}

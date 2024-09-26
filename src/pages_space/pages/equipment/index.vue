@@ -68,7 +68,7 @@
 			<view class="slider">
 				<wd-slider v-model="valueSun" :min="0" :max="100" hide-min-max />
 			</view>
-			
+
 		</view>
 		<view class="equipment_silder" style="margin-top:30rpx;">
 			<text class="iconfont icon-banyuan"
@@ -197,7 +197,7 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			top: 40%;
+			top: 45%;
 
 			image {
 				width: 280rpx;
@@ -238,7 +238,7 @@
 
 		:deep(.wd-button) {
 			width: 100%;
-			height: 116rpx;
+			height: 116rpx !important;
 			background-color: #f0f2fe !important;
 		}
 

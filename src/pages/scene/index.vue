@@ -32,7 +32,7 @@
 				class="custom-segmented" @change="changeSegmented"></wd-segmented>
 		</view>
 		<view class="automatic" v-if="current == '自动化'">
-			<view class="automatic_list">
+			<view class="automatic_list" @click="toInstant">
 				<view class="list_top">
 					<view class="top_open">
 						<view class="" style="font-weight: 600;color: #212121;font-size: 36rpx;">
@@ -65,7 +65,7 @@
 			</view>
 		</view>
 		<view class="instant" v-if="current == '即点即用'">
-			<view class="instant_list">
+			<view class="instant_list" @click="toInstant">
 				<view class="list_top">
 					<view class="top_icon">
 
@@ -110,6 +110,12 @@
 	const current = ref('自动化');
 	const checked = ref<boolean>(true)
 
+	const toSelect = () => {
+		uni.navigateTo({
+			url: '/pages_space/pages/select/index'
+		});
+	}
+
 	const changeSegmented = (event : any) => {
 		console.log('分段器的切换', event);
 		current.value = event.value;
@@ -118,6 +124,12 @@
 	const toLog = () => {
 		uni.navigateTo({
 			url: '/pages_scene/pages/log/index'
+		});
+	}
+
+	const toInstant = () => {
+		uni.navigateTo({
+			url: '/pages_scene/pages/createScene/index'
 		});
 	}
 </script>

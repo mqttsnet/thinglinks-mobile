@@ -116,7 +116,7 @@
 		.logo {
 			width: 180rpx;
 			height: 184rpx;
-			margin-top: 60rpx;
+			margin-top: 45rpx;
 		}
 
 		.title-wrap {
@@ -124,18 +124,18 @@
 			flex-direction: column;
 			align-items: center;
 			justify-content: center;
-			margin-top: 52rpx;
+			margin-top: 30rpx;
 
 			.title {
-				font-size: 64rpx;
+				font-size: 55rpx;
 				font-family: "Urbanist", sans-serif;
 				font-weight: 700;
 				letter-spacing: 4rpx;
-				margin-bottom: 24rpx;
+				margin-bottom: 20rpx;
 			}
 
 			.p {
-				font-size: 36rpx;
+				font-size: 28rpx;
 				color: #616161;
 			}
 		}
@@ -146,7 +146,7 @@
 			flex-direction: column;
 			align-items: center;
 			justify-content: center;
-			margin: 96rpx 0;
+			margin: 40rpx 0;
 
 			.middle-item {
 				width: 100%;
@@ -232,7 +232,7 @@
 			align-items: center;
 			font-size: 28rpx;
 			color: #616161;
-			margin-bottom: 72rpx;
+			margin-bottom: 40rpx;
 
 			.privacy {
 				margin-right: 46rpx;

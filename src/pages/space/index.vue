@@ -146,7 +146,7 @@
 					<text class="iconfont icon-shebei" style="font-size: 36rpx;margin-right: 24rpx;"></text>添加设备
 				</view>
 				<wd-gap bg-color="#eeeeee" height="1"></wd-gap>
-				<view class="popup_text" @click="startScan">
+				<view class="popup_text">
 					<text class="iconfont icon-saoyisao1" style="font-size: 36rpx;margin-right: 24rpx;"></text>扫描添加
 					<!-- 输入设备码的部分 -->
 					<view v-if="showInput">
@@ -181,7 +181,7 @@
 
 	const toSelect = () => {
 		uni.navigateTo({
-			url: '/pages_space/select/index'
+			url: '/pages_space/pages/select/index'
 		});
 	}
 	const selectItem = (index : any) => {
@@ -192,39 +192,39 @@
 	};
 	const toAddDevice = () => {
 		uni.navigateTo({
-			url: '/pages_space/addDevice/index'
+			url: '/pages_space/pages/addDevice/index'
 		});
 		showDevice.value = false;
 	}
 
-	const startScan = () => {
-		uni.scanCode({
-			success: (res) => {
-				console.log(res);
-				// 成功扫描二维码
-				scanResult.value = res.result;
-				showInput.value = false; // 隐藏输入框
-			},
-			fail: (err) => {
-				console.log(err);
-				// 扫码失败，显示输入框
-				showInput.value = true;
-			}
-		});
-	};
+	// const startScan = () => {
+	// 	uni.scanCode({
+	// 		success: (res) => {
+	// 			console.log(res);
+	// 			// 成功扫描二维码
+	// 			scanResult.value = res.result;
+	// 			showInput.value = false; // 隐藏输入框
+	// 		},
+	// 		fail: (err) => {
+	// 			console.log(err);
+	// 			// 扫码失败，显示输入框
+	// 			showInput.value = true;
+	// 		}
+	// 	});
+	// };
 
-	const submitDeviceCode = () => {
-		if (deviceCode.value.trim()) {
-			scanResult.value = deviceCode.value;
-			deviceCode.value = ''; // 清空输入框
-			showInput.value = false; // 隐藏输入框
-		} else {
-			uni.showToast({
-				title: '设备码不能为空',
-				icon: 'none'
-			});
-		}
-	};
+	// const submitDeviceCode = () => {
+	// 	if (deviceCode.value.trim()) {
+	// 		scanResult.value = deviceCode.value;
+	// 		deviceCode.value = ''; // 清空输入框
+	// 		showInput.value = false; // 隐藏输入框
+	// 	} else {
+	// 		uni.showToast({
+	// 			title: '设备码不能为空',
+	// 			icon: 'none'
+	// 		});
+	// 	}
+	// };
 </script>
 
 <style lang="scss" scoped>

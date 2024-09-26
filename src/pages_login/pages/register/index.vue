@@ -9,6 +9,7 @@
 </route>
 <template>
 	<view class="bg-white overflow-hidden pt-2 px-4" :style="{ marginTop: safeAreaInsets?.top + 'px' }">
+		<view style="margin-left:30rpx;" @click="toLogin"><wd-icon name="arrow-left1" size="22px"></wd-icon></view>
 		<view class="wrap">
 			<navigator open-type="navigateBack"></navigator>
 			<view class="title-wrap">
@@ -28,8 +29,8 @@
 					<view class="input-wrap">
 						<text class="iconfont icon-jiesuo" style="margin-right: 26rpx; font-size: 40rpx"></text>
 						<input class="uni-input" v-model="formData.password" placeholder="请输入密码"
-							:type="showPassword ? 'text' : 'password'" />
-						<text class="iconfont" :class="showPassword ? 'icon-yanjing' : 'icon-yanjing_yincang'"
+							:password="!showPassword" />
+						<text class="iconfont" :class="[!showPassword ? 'icon-yanjing_yincang' : 'icon-yanjing']"
 							@click="changePassword"></text>
 					</view>
 				</view>
@@ -108,6 +109,12 @@
 
 	const changePassword = () => {
 		showPassword.value = !showPassword.value
+	}
+
+	const toLogin = () => {
+		uni.navigateBack({
+			delta: 1
+		})
 	}
 
 	// 生成验证码
@@ -244,12 +251,12 @@
 				}
 
 				.icon-yanjing {
-					margin-left: 200rpx;
+					margin-left: 20rpx;
 					font-size: 45rpx;
 				}
 
 				.icon-yanjing_yincang {
-					margin-left: 200rpx;
+					margin-left: 20rpx;
 					font-size: 45rpx;
 				}
 			}

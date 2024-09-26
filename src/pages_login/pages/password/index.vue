@@ -3,12 +3,13 @@
 	layout: 'demo',
 	style: {
 	navigationStyle: 'custom',
-	navigationBarTitleText: '密码登录',
+	navigationBarTitleText: '登录',
 	},
 	}
 </route>
 <template>
 	<view class="bg-white overflow-hidden pt-2 px-4" :style="{ marginTop: safeAreaInsets?.top + 'px' }">
+		<view style="margin-left:30rpx;" @click="toLogin"><wd-icon name="arrow-left1" size="22px"></wd-icon></view>
 		<view class="wrap">
 			<navigator open-type="navigateBack"></navigator>
 			<view class="title-wrap">
@@ -28,8 +29,8 @@
 					<view class="input-wrap">
 						<text class="iconfont icon-jiesuo" style="margin-right: 26rpx; font-size: 40rpx"></text>
 						<input class="uni-input" v-model="formData.password" placeholder="请输入密码"
-							:type="showPassword ? 'text' : 'password'" @touchstart.prevent />
-						<text class="iconfont" :class="showPassword ? 'icon-yanjing' : 'icon-yanjing_yincang'"
+							:password="!showPassword" />
+						<text class="iconfont" :class="[!showPassword ? 'icon-yanjing_yincang' : 'icon-yanjing']"
 							@click="changePassword"></text>
 					</view>
 				</view>
@@ -37,7 +38,7 @@
 					<view class="input-title">验证码</view>
 					<view class="input-wrap">
 						<text class="iconfont icon-yanzhengma" style="margin-right: 26rpx; font-size: 40rpx"></text>
-						<input v-model="formData.code" focus maxlength="6" placeholder="请输入验证码" />
+						<input v-model="formData.code" maxlength="6" placeholder="请输入验证码" />
 						<image v-if="formState.captchaSrc" :src="formState.captchaSrc" @click="buildCaptcha" mode=""
 							style="width: 200rpx; height: 88rpx"></image>
 						<image v-else :src="noCaptcha" @click="buildCaptcha" mode=""
@@ -47,7 +48,7 @@
 				<view class="remember-wrap">
 					<checkbox-group class="checkbox-wrap">
 						<label>
-							<checkbox class="checkbox" value="checkboxValue" color="#475ee9" />
+							<checkbox class="checkbox" value="checkboxValue" />
 							记住账号
 						</label>
 					</checkbox-group>
@@ -98,8 +99,14 @@
 
 	const changePassword = () => {
 		showPassword.value = !showPassword.value
-		console.log('Current password:', formData.password);
 	}
+
+	const toLogin = () => {
+		uni.navigateBack({
+			delta: 1
+		})
+	}
+
 	const list = ref([
 		{
 			url: 'icon-weixin1',
@@ -219,6 +226,11 @@
 
 	const handleSubmit = async () => {
 		try {
+			// 显示加载提示
+			uni.showLoading({
+				title: '正在登录中...',
+				mask: true,
+			});
 			// 检查用户名、密码和验证码是否为空
 			if (!formData.username) {
 				uni.showToast({
@@ -243,9 +255,9 @@
 				})
 				return
 			}
-			console.log('Submitting form with data:', formData)
+			// console.log('Submitting form with data:',
 			const res = await login({ ...formData, grantType: formData.grantType, key: formData.key })
-			console.log(res)
+			// console.log(res)
 			if (res?.data) {
 				const { token, tenantId, refreshToken, expiration } = res.data
 				userStore.setState({
@@ -256,18 +268,24 @@
 				})
 				return await afterLogin()
 			} else {
-				console.error('Login failed: no data in response')
+				// console.error('Login failed: no data in response')
 				uni.showToast({
-					title: '登录失败，未返回数据',
+					title: res.msg,
 					icon: 'none',
 				})
 			}
 		} catch (error) {
-			console.error('Error in handleSubmit:', error)
-			uni.showToast({
-				title: error.message || '登录失败，出现错误',
-				icon: 'none',
-			})
+			// console.error('Error in handleSubmit:', error)
+			const { msg = '', code = 0 } = error.data
+			if (msg) {
+				uni.showToast({
+					title: msg || '登录失败，出现错误',
+					icon: 'none',
+				})
+				if (code === -9 && msg === '验证码过期') {
+					buildCaptcha()
+				}
+			}
 		}
 	}
 
@@ -291,21 +309,21 @@
 	}
 	const loginWithWeChat = () => {
 		console.log('手机号登录')
-		uni.navigateTo({
-			url: '/pages_login/pages/phone/index'
-		});
+		uni.switchTab({
+			url: '/pages/space/index',
+		})
 	}
 	const loginWithApple = () => {
 		console.log('手机号登录')
-		uni.navigateTo({
-			url: '/pages_login/pages/phone/index'
-		});
+		uni.switchTab({
+			url: '/pages/space/index',
+		})
 	}
 	const loginWithAlipay = () => {
 		console.log('手机号登录')
-		uni.navigateTo({
-			url: '/pages_login/pages/phone/index'
-		});
+		uni.switchTab({
+			url: '/pages/space/index',
+		})
 	}
 
 	const loginWithPhone = () => {
@@ -360,7 +378,6 @@
 			}
 
 			.input-wrap {
-				position: relative;
 				box-sizing: border-box;
 				display: flex;
 				align-items: center;
@@ -371,19 +388,8 @@
 				background-color: #fafafa;
 				border-radius: 20rpx;
 
-				.icon {
-					width: 36rpx;
-					height: 32rpx;
-					margin-right: 26rpx;
-				}
-
-				.show-icon {
-					position: absolute;
-					right: 46rpx;
-				}
-
 				input {
-					width: 460rpx;
+					width: 380rpx;
 					height: 58rpx;
 				}
 
