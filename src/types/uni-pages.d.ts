@@ -12,12 +12,6 @@ interface NavigateToOptions {
        "/pages/scene/index" |
        "/pages/space/index" |
        "/pages/toLogin/index" |
-       "/pages/toLogin/phone" |
-       "/pages/toLogin/register" |
-       "/pages/spaceSub/addDevice/index" |
-       "/pages/spaceSub/connection/index" |
-       "/pages/spaceSub/equipment/index" |
-       "/pages/spaceSub/select/index" |
        "/pages_mine/pages/account/index" |
        "/pages_mine/pages/appearance/index" |
        "/pages_mine/pages/appearance/language" |
@@ -30,7 +24,16 @@ interface NavigateToOptions {
        "/pages_mine/pages/space/index" |
        "/pages_mine/pages/voice/index" |
        "/pages_mine/pages/voice/join" |
-       "/pages_mine/pages/voice/result";
+       "/pages_mine/pages/voice/result" |
+       "/pages_login/pages/password/index" |
+       "/pages_login/pages/phone/index" |
+       "/pages_login/pages/register/index" |
+       "/pages_scene/pages/createScene/index" |
+       "/pages_scene/pages/log/index" |
+       "/pages_space/pages/addDevice/index" |
+       "/pages_space/pages/connection/index" |
+       "/pages_space/pages/equipment/index" |
+       "/pages_space/pages/select/index";
 }
 interface RedirectToOptions extends NavigateToOptions {}
 

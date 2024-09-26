@@ -8,8 +8,8 @@
 	}
 </route>
 <template>
-	<view class="bg-white overflow-hidden pt-2 px-4" :style="{ marginTop: safeAreaInsets?.top + 'px' }"
-		style="background: #6C6F77;">
+	<view class="overflow-hidden pt-2 px-4" :style="{ paddingTop: safeAreaInsets?.top + 'px' }"
+		style="background-color: #6C6F77;min-height: 100vh;">
 		<view class="select_container" @click="handleContainerClick">
 			<view class="select_wrap" @click.stop>
 				<view class="select_list" v-for="(item,index) in spaceList" :key="index">
@@ -44,9 +44,10 @@
 
 
 	const handleContainerClick = () => {
-		uni.switchTab({
-			url: '/pages/space/index'
-		});
+		// uni.switchTab({
+		// 	url: '/pages/space/index'
+		// });
+		uni.navigateBack()
 	};
 
 	onMounted(() => {

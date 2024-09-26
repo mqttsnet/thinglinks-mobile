@@ -117,7 +117,7 @@
 	}
 	const toConnection = () => {
 		uni.navigateTo({
-			url: '/pages/spaceSub/connection/index'
+			url: '/pages_space/pages/connection/index'
 		});
 	}
 	const selectItem = (index : any) => {

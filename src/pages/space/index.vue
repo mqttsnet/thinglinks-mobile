@@ -8,8 +8,8 @@
 	}
 </route>
 <template>
-
-	<view class="bg-white overflow-hidden pt-2 px-4" :style="{ marginTop: safeAreaInsets?.top + 'px' }">
+	<view class="overflow-hidden pt-2 px-4" :style="{ paddingTop: safeAreaInsets?.top + 'px' }"
+		style="background-color: #f5f5f5;min-height: 100vh;">
 		<view class="space_top">
 			<view class="space_top_item" @click="toSelect">
 				<view class="" style="font-size: 48rpx;color: #212121;font-weight: 650;">
@@ -19,12 +19,12 @@
 					<wd-icon name="arrow-down" size="45rpx" color="#212121"></wd-icon>
 				</view>
 			</view>
-			<view class="space_top_items">
-				<view class="" style="margin-right: 45rpx;">
-					<text class="iconfont icon-zhinengjiqiren" style="font-size: 80rpx;color: #405ff2;"></text>
+			<view class="space_top_right">
+				<view class="" style="margin-right: 60rpx;">
+					<text class="iconfont icon-zhinengjiqiren" style="font-size: 60rpx;"></text>
 				</view>
 				<view class="">
-					<text class="iconfont icon-tongzhi" style="font-size: 50rpx;"></text>
+					<wd-icon name="notification-filled" size="22px"></wd-icon>
 				</view>
 			</view>
 		</view>
@@ -97,7 +97,24 @@
 			</view>
 		</scroll-view>
 		<view class="space_list" v-if="showList">
-
+			<view class="list_item">
+				<view class="list_top">
+					<view class="">
+						<image src="@/static/space/deng.png" mode=""></image>
+					</view>
+					<view class="list_switch">
+						<wd-switch v-model="checked" size="22px" active-color="#405ff2" />
+					</view>
+				</view>
+				<view class="list_name">
+					智能灯
+				</view>
+				<view class="list_idea">
+					<text class="iconfont icon-wifi1"
+						style="font-size: 24rpx;display: flex;justify-content: center;align-item: center;"></text><text
+						style="margin-left: 5rpx;">无线链接</text>
+				</view>
+			</view>
 		</view>
 		<view class="space_default" v-if="!showList">
 			<view class="default_image">
@@ -129,7 +146,7 @@
 					<text class="iconfont icon-shebei" style="font-size: 36rpx;margin-right: 24rpx;"></text>添加设备
 				</view>
 				<wd-gap bg-color="#eeeeee" height="1"></wd-gap>
-				<view class="popup_text" @click="startScan">
+				<view class="popup_text">
 					<text class="iconfont icon-saoyisao1" style="font-size: 36rpx;margin-right: 24rpx;"></text>扫描添加
 					<!-- 输入设备码的部分 -->
 					<view v-if="showInput">
@@ -154,16 +171,17 @@
 
 	const deviceList = ref(['所有空间', '客厅', '卧室', '厨房', '浴室']);
 	const selectedIndex = ref(0);
-	const showList = ref(false);
+	const showList = ref(true);
 	const showDevice = ref(false);
 	const showInput = ref(false);  // 控制是否显示输入框
 	const deviceCode = ref('');    // 设备码的值
 	const scanResult = ref('');    // 扫码结果
+	const checked = ref<boolean>(true)
 
 
 	const toSelect = () => {
 		uni.navigateTo({
-			url: '/pages/spaceSub/select/index'
+			url: '/pages_space/pages/select/index'
 		});
 	}
 	const selectItem = (index : any) => {
@@ -174,44 +192,45 @@
 	};
 	const toAddDevice = () => {
 		uni.navigateTo({
-			url: '/pages/spaceSub/addDevice/index'
+			url: '/pages_space/pages/addDevice/index'
 		});
 		showDevice.value = false;
 	}
 
-	const startScan = () => {
-		uni.scanCode({
-			success: (res) => {
-				console.log(res);
-				// 成功扫描二维码
-				scanResult.value = res.result;
-				showInput.value = false; // 隐藏输入框
-			},
-			fail: (err) => {
-				console.log(err);
-				// 扫码失败，显示输入框
-				showInput.value = true;
-			}
-		});
-	};
+	// const startScan = () => {
+	// 	uni.scanCode({
+	// 		success: (res) => {
+	// 			console.log(res);
+	// 			// 成功扫描二维码
+	// 			scanResult.value = res.result;
+	// 			showInput.value = false; // 隐藏输入框
+	// 		},
+	// 		fail: (err) => {
+	// 			console.log(err);
+	// 			// 扫码失败，显示输入框
+	// 			showInput.value = true;
+	// 		}
+	// 	});
+	// };
 
-	const submitDeviceCode = () => {
-		if (deviceCode.value.trim()) {
-			scanResult.value = deviceCode.value;
-			deviceCode.value = ''; // 清空输入框
-			showInput.value = false; // 隐藏输入框
-		} else {
-			uni.showToast({
-				title: '设备码不能为空',
-				icon: 'none'
-			});
-		}
-	};
+	// const submitDeviceCode = () => {
+	// 	if (deviceCode.value.trim()) {
+	// 		scanResult.value = deviceCode.value;
+	// 		deviceCode.value = ''; // 清空输入框
+	// 		showInput.value = false; // 隐藏输入框
+	// 	} else {
+	// 		uni.showToast({
+	// 			title: '设备码不能为空',
+	// 			icon: 'none'
+	// 		});
+	// 	}
+	// };
 </script>
 
 <style lang="scss" scoped>
 	.space_top {
 		display: flex;
+		justify-content: space-between;
 		align-items: center;
 
 		.space_top_item {
@@ -219,22 +238,13 @@
 			align-items: center;
 		}
 
-		// #ifndef MP-WEIXIN
-		.space_top_items {
+		.space_top_right {
 			display: flex;
 			align-items: center;
-			margin-left: 260rpx;
+			/*#ifdef MP*/
+			margin-right: 180rpx;
+			/*#endif*/
 		}
-
-		// #endif
-		// #ifdef MP-WEIXIN
-		.space_top_items {
-			display: flex;
-			align-items: center;
-			margin-left: 130rpx;
-		}
-
-		// #endif
 	}
 
 	.space_day {
@@ -298,6 +308,54 @@
 			padding: 16rpx 40rpx;
 			flex-shrink: 0;
 			margin-right: 24rpx;
+		}
+	}
+
+	.space_list {
+		display: flex;
+		justify-content: space-between;
+		margin: 40rpx 0;
+		flex-wrap: wrap;
+
+		.list_item {
+			background-color: #ffffff;
+			padding: 20rpx;
+			border-radius: 10px;
+			margin-bottom: 20rpx;
+
+			.list_top {
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-start;
+
+				.list_switch {
+					margin-left: 84rpx;
+				}
+
+				image {
+					width: 120rpx;
+					height: 120rpx;
+				}
+			}
+
+			.list_name {
+				margin-top: 16rpx;
+				font-weight: 600;
+				color: #212121;
+			}
+
+			.list_idea {
+				width: 55%;
+				margin-top: 16rpx;
+				padding: 5rpx;
+				background: #f5f5f5;
+				color: #9e9e9e;
+				border-radius: 40px;
+				font-size: 24rpx;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
 		}
 	}
 

@@ -11,13 +11,7 @@ interface NavigateToOptions {
        "/pages/mine/index" |
        "/pages/scene/index" |
        "/pages/space/index" |
-       "/pages/toLogin/index" |
-       "/pages/toLogin/phone" |
-       "/pages/toLogin/register" |
-       "/pages/spaceSub/addDevice/index" |
-       "/pages/spaceSub/connection/index" |
-       "/pages/spaceSub/equipment/index" |
-       "/pages/spaceSub/select/index";
+       "/pages/toLogin/index";
 }
 interface RedirectToOptions extends NavigateToOptions {}
 

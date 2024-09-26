@@ -95,7 +95,7 @@
       "type": "page",
       "style": {
         "navigationStyle": "custom",
-        "navigationBarTitleText": "场景"
+        "navigationBarTitleText": "仪表盘"
       }
     },
     {
@@ -114,152 +114,193 @@
         "navigationStyle": "custom",
         "navigationBarTitleText": "登录"
       }
-    },
-    {
-      "path": "pages/toLogin/phone",
-      "type": "page",
-      "layout": "demo",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "登录"
-      }
-    },
-    {
-      "path": "pages/toLogin/register",
-      "type": "page",
-      "layout": "demo",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "登录"
-      }
-    },
-    {
-      "path": "pages/spaceSub/addDevice/index",
-      "type": "page",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "添加设备"
-      }
-    },
-    {
-      "path": "pages/spaceSub/connection/index",
-      "type": "page",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "连接成功"
-      }
-    },
-    {
-      "path": "pages/spaceSub/equipment/index",
-      "type": "page",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "控制设备"
-      }
-    },
-    {
-      "path": "pages/spaceSub/select/index",
-      "type": "page",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "我的空间",
-        "navigationBarBackgroundColor": "#6C6F77"
-      }
     }
   ],
   "subPackages": [
     {
-      "root": "pages_mine/pages",
+      "root": "pages_mine",
       "pages": [
         {
-          "path": "account/index",
+          "path": "pages/account/index",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "账户与安全"
           }
         },
         {
-          "path": "appearance/index",
+          "path": "pages/appearance/index",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "应用程序外观"
           }
         },
         {
-          "path": "appearance/language",
+          "path": "pages/appearance/language",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "应用程序语言"
           }
         },
         {
-          "path": "data/index",
+          "path": "pages/data/index",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "数据与分析"
           }
         },
         {
-          "path": "help/index",
+          "path": "pages/help/index",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "联系我们"
           }
         },
         {
-          "path": "notification/index",
+          "path": "pages/notification/index",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "通知"
           }
         },
         {
-          "path": "profile/index",
+          "path": "pages/profile/index",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "个人信息"
           }
         },
         {
-          "path": "relevance/index",
+          "path": "pages/relevance/index",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "关联账户"
           }
         },
         {
-          "path": "setting/index",
+          "path": "pages/setting/index",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "其他设置"
           }
         },
         {
-          "path": "space/index",
+          "path": "pages/space/index",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "空间管理"
           }
         },
         {
-          "path": "voice/index",
+          "path": "pages/voice/index",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "语音助手"
           }
         },
         {
-          "path": "voice/join",
+          "path": "pages/voice/join",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "语音助手"
           }
         },
         {
-          "path": "voice/result",
+          "path": "pages/voice/result",
           "type": "mine",
           "style": {
             "navigationBarTitleText": "语音助手"
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages_login",
+      "pages": [
+        {
+          "path": "pages/password/index",
+          "type": "page",
+          "layout": "demo",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "登录"
+          }
+        },
+        {
+          "path": "pages/phone/index",
+          "type": "page",
+          "layout": "demo",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "手机号登录"
+          }
+        },
+        {
+          "path": "pages/register/index",
+          "type": "page",
+          "layout": "demo",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "注册"
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages_scene",
+      "pages": [
+        {
+          "path": "pages/createScene/index",
+          "type": "page",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "创建场景",
+            "navigationBarBackgroundColor": "#f5f5f5"
+          }
+        },
+        {
+          "path": "pages/log/index",
+          "type": "page",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "日志"
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages_space",
+      "pages": [
+        {
+          "path": "pages/addDevice/index",
+          "type": "page",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "添加设备"
+          }
+        },
+        {
+          "path": "pages/connection/index",
+          "type": "page",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "连接成功"
+          }
+        },
+        {
+          "path": "pages/equipment/index",
+          "type": "page",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "控制设备"
+          }
+        },
+        {
+          "path": "pages/select/index",
+          "type": "page",
+          "style": {
+            "navigationStyle": "custom",
+            "navigationBarTitleText": "我的空间",
+            "navigationBarBackgroundColor": "#6C6F77"
           }
         }
       ]
