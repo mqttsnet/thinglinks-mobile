@@ -9,7 +9,7 @@
 	<a href="https://www.oscs1024.com/platform/badge/mqttsnet/thinglinks.svg?size=small"><img src="https://www.oscs1024.com/platform/badge/mqttsnet/thinglinks.svg?size=small"></a>
 </p>
 
-## ThingLinks | [English Documentation](README.md)
+## ThingLinks | [中文文档](README.zh_CN.md)
 
 ## Platform Overview
 
